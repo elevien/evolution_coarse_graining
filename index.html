@@ -335,15 +335,91 @@
 				</section>
 
 
-				
+				<!-- ########################################################## -->
+				<section>
+				<h2> Branching process model </h2>
+				<h4 class = "fragment"> Start with simpler case: exponential growth with age structure  </h4>
+				<div class = "fragment">	<p> Alfred Lotka (1934), Bellman and Harris (1948) and Powell (1956): Each cell's generation time is drawn <b>independently</b> from a distribution $f(\tau)$.</p>	</div>
+
+				<div class = "fragment">
+				<div class="viewof-sigma" class="horizontal-center"></div>
+				<div class="tree" ></div>
+				<script type="module">
+				import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+				import define from "https://api.observablehq.com/@elevien/branching-process/2.js?v=3";
+				(new Runtime).module(define, name => {
+					if (name === "viewof sigma") return Inspector.into(".viewof-sigma")();
+					if (name === "tree") return Inspector.into(".tree")();
+					return ["tree_data1"].includes(name) || null;
+				});
+				</script></div>
+
+
+				<div class = "fragment">
+				<p> In the long-term, ${\mathbb E}[N(t)] = Ae^{\Lambda t}$ for some $\Lambda$. </p>
+				</div>
+				<div class = "fragment">
+				<h4> How does the rate at which the population grows depend on the distribution of generation times? </h4>
+				</div>
+
+
+
+				</section>
+
+
+
+
+				<!-- ########################################################## -->
+				<section>
+				<h2> Branching process model </h2>
+
+				<div class="recursive_tree"></div>
+				<script type="module">
+				import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+				import define from "https://api.observablehq.com/@elevien/branching-process/2.js?v=3";
+				(new Runtime).module(define, name => {
+				if (name === "recursive_tree") return Inspector.into(".recursive_tree")();
+				});
+				</script>
+
+
+				<div class="fragment">
+				<p>The root cell has two daughters with progenies that grow exponentially at the same rate $\Lambda$. </p></div>
+				<div class="fragment"><p> Let $\tau$ be the first cell's generation time:
+				<script type="math/tex; mode=display">
+				{\mathbb E}\left[N_{\rm daughter}|\tau\right] = Ae^{\Lambda(t-\tau)} \implies
+				{\mathbb E}\left[N_{\rm daughter}\right] = 	A \int_0^{\infty} e^{\Lambda(t-\tau)}f(\tau)d\tau
+				</script>
+				<!-- <script type="math/tex; mode=display">
+				N_{\rm daughter}(t|\tau)= Ae^{\Lambda(t-\tau)} \implies
+				{\mathbb E}_f\left[N_{\rm daughter}(t|\tau)\right] = 	A \int_0^{\infty} e^{\Lambda(t-\tau)}f(\tau)d\tau
+				</script> -->
+				</p>
+				<div>
+
+				<div class="fragment">
+				<p> Writing the population size at time $t$ in terms of the size of both daughter progenies gives the so-called Euler-Lotka Formula
+					<script type="math/tex; mode=display">
+				Ae^{\Lambda t} = 	\color{rgb(20, 116, 111)}{{\mathbb E}\left[N_{\text{left daughter}}\right]} + \color{rgb(205, 88, 73)}	{{\mathbb E}\left[N_{\text{right daughter}}\right]}  = 2 A \int_0^{\infty} e^{\Lambda(t-\tau)}f(\tau)d\tau \implies \color{rgb(5, 5, 5)}{	\frac{1}{2} = \int_0^{\infty}f(\tau)e^{-\Lambda \tau}d\tau}
+					</script>
+				</p></div>
+
+
+
+
+				</section>
+
+
+
+
 
 
 
 					<!-- ########################################################## -->
 					<section>
-					<h2> Bridging-scales </h2>
+					<h2> Branching process in finite population </h2>
 					<p> How can we connect dynamics at the single-cell level to population level dynamics?  </p>
-				<p>	\[
+				<p class="fragment">	\[
 			 \frac{d}{dt} Q({\bf u},{\bf a},{\boldsymbol \lambda},{\bf s},t) + \sum_{k=1}^N \frac{\partial}{\partial a_k} Q({\bf u},{\bf a},{\boldsymbol \lambda},{\bf s},t)
 			 = - Q({\bf u},{\bf a},{\boldsymbol \lambda},{\bf s},t)\left(D+ \sum_{k=1}^N \gamma_{u_k}(a_k,\lambda_k,s_{b,k})\right) \]
 			along with the boundary conditions
@@ -352,38 +428,55 @@
 			S_{k,s_{b,v}e^{\lambda a_v}/2}(S_{v,s_{b,v}e^{\lambda a_v}/2}({\bf s})),t)\\
 			\quad\quad= \frac{g(\lambda_k)g(\lambda_v)}{N}\int\int \gamma_{u_v}(a_v,\lambda_v,s_{b,v})
 			\times Q({\bf u},{\bf a},S_{v,\lambda_v'}S_{k,\lambda_k'}(({\boldsymbol \lambda})),{\bf s},t)d\lambda_k'd\lambda_v'.\]</p>
-				<h4> Note that useful for understanding qualitative phenomenon  </h4>
+			<p class="fragment">In these equations, $g(\lambda)$ is the distribution of single-cell growth rates and $\gamma$ is the division rate:
+			\[
+		\gamma_i(a,\lambda,s_b) = \frac{\int \int\, d\lambda\, ds_b\,  f_i(a|\lambda,s_b)}{1- \int_0^a\int \int\, d\lambda\, ds_b\,da'\,  f_i(a'|\lambda,s_b)}
+	\] </p>
+
 				</section>
-
-
-<!-- ########################################################## -->
-	<section>
-		<h2> Selection acts on phsiological traits? </h2>
-		<h4> Key challange: single-cells do not have well defined growth rate  </h4>
-
-		<p> The population growth rate is an emergent property of single-cell dynamics.</p>
-		</section>
 
 						<!-- ########################################################## -->
 						<section>
 						<h2> Bridging-scales </h2>
-						<h4> Question: can we coarse-grain to get an effective SDE?  If so, what are the parameters? </h4>
+						 <p> We don't really care about $Q$ though! we are interested in the behavoir of the mutant fraction $\phi$. </p>
+						<h4 class="fragment"> Question: can we coarse-grain to get an effective SDE?  If so, what are the parameters? </h4>
 
-						<p> When $\phi$ is not "too small", we can approximate
+						<p class="fragment"> Let's start by assuming a large mutant fraction. We assume the wildtype population grows at a rate $1$ and the mutant population grows at a rate $s$.
+
+							When $\phi$ is not "too small", we can approximate
 						\[
-						\frac{d}{dt}\phi = s_{\rm eff}\phi(1-\phi)$
-					\]
-					So what about the noise, maybe
+						\frac{d}{dt}\phi = \frac{1}{N}\frac{d}{dt}m - \frac{\phi}{N}\frac{d}{dt}N\\
+						\quad\quad = s_{\rm eff}\phi(1-\phi)
+					\] <p>
+
+			</section>
+
+
+					<!-- ########################################################## -->
+					<section>
+					<h2> Bridging-scales </h2>
+					<p>
+					We might guess that the corresponding SDE is something like
 					\[
-					\frac{d}{dt}\phi = s_{\rm eff}\phi(1-\phi) + \sqrt{\phi(1-\phi)/N_{\rm eff}}\xi$
+					\frac{d}{dt}\phi = s_{\rm eff}\phi(1-\phi) + \sqrt{\phi(1-\phi)/N_{\rm eff}}\xi
 				\]
+				This would imply $p_{\rm fix } \sim s\frac{N_{\rm eff}}{N}$
 				 </p>
 
-				<p>If this is true, we can obtain the classical formula for fixation probability </p>
+
 
 					</section>
 							</section>
 
+
+
+				<!-- ########################################################## -->
+				<!-- ########################################################## -->
+				<!-- ########################################################## -->
+				<!-- ########################################################## -->
+				<!-- ########################################################## -->
+				<!-- ########################################################## -->
+					<section>
 					<!-- ########################################################## -->
 					<section>
 					<h2>Nuetral dynamics </h2>
@@ -392,6 +485,7 @@
 						f(\tau) = \frac{\beta^{-\alpha}e^{\tau/\beta}\tau^{\alpha-1}}{\Gamma(\alpha)}
 						\]
 						This has the property that it interpolates between perfectly deterministic genertaion times and exponential case. </p>
+
 					</section>
 
 					<!-- ########################################################## -->
@@ -430,86 +524,16 @@
 
 
 					</section>
-
 </section>
 
-
-
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
 
 <section>
-						<!-- ########################################################## -->
-						<section>
-						<h2> Branching process model </h2>
-						<p> Euler was thinking about a population humans, but it's actually easier to think about of population of cells (e.g. bacteria) undergoing binary fission </p>
-					<div class = "fragment">	<p> Alfred Lotka (1934), Bellman and Harris (1948) and Powell (1956): Each cell's generation time is drawn <b>independently</b> from a distribution $f(\tau)$.</p>	</div>
-
-						<div class = "fragment">
-						<div class="viewof-sigma" class="horizontal-center"></div>
-						<div class="tree" ></div>
-						<script type="module">
-						import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-						import define from "https://api.observablehq.com/@elevien/branching-process/2.js?v=3";
-						(new Runtime).module(define, name => {
-							if (name === "viewof sigma") return Inspector.into(".viewof-sigma")();
-							if (name === "tree") return Inspector.into(".tree")();
-							return ["tree_data1"].includes(name) || null;
-						});
-						</script></div>
-
-
-						<div class = "fragment">
-						<p> In the long-term, ${\mathbb E}[N(t)] = Ae^{\Lambda t}$ for some $\Lambda$. </p>
-						</div>
-						<div class = "fragment">
-						<h4> How does the rate at which the population grows depend on the distribution of generation times? </h4>
-						</div>
-
-
-
-						</section>
-
-
-
-
-						<!-- ########################################################## -->
-						<section>
-						<h2> Branching process model </h2>
-
-						<div class="recursive_tree"></div>
-						<script type="module">
-						import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-						import define from "https://api.observablehq.com/@elevien/branching-process/2.js?v=3";
-						(new Runtime).module(define, name => {
-						if (name === "recursive_tree") return Inspector.into(".recursive_tree")();
-						});
-						</script>
-
-
-						<div class="fragment">
-						<p>The root cell has two daughters with progenies that grow exponentially at the same rate $\Lambda$. </p></div>
-						<div class="fragment"><p> Let $\tau$ be the first cell's generation time:
-						<script type="math/tex; mode=display">
-						{\mathbb E}\left[N_{\rm daughter}|\tau\right] = Ae^{\Lambda(t-\tau)} \implies
-						{\mathbb E}\left[N_{\rm daughter}\right] = 	A \int_0^{\infty} e^{\Lambda(t-\tau)}f(\tau)d\tau
-						</script>
-						<!-- <script type="math/tex; mode=display">
-						N_{\rm daughter}(t|\tau)= Ae^{\Lambda(t-\tau)} \implies
-						{\mathbb E}_f\left[N_{\rm daughter}(t|\tau)\right] = 	A \int_0^{\infty} e^{\Lambda(t-\tau)}f(\tau)d\tau
-						</script> -->
-						</p>
-						<div>
-
-						<div class="fragment">
-						<p> Writing the population size at time $t$ in terms of the size of both daughter progenies gives the so-called Euler-Lotka Formula
-							<script type="math/tex; mode=display">
-						Ae^{\Lambda t} = 	\color{rgb(20, 116, 111)}{{\mathbb E}\left[N_{\text{left daughter}}\right]} + \color{rgb(205, 88, 73)}	{{\mathbb E}\left[N_{\text{right daughter}}\right]}  = 2 A \int_0^{\infty} e^{\Lambda(t-\tau)}f(\tau)d\tau \implies \color{rgb(5, 5, 5)}{	\frac{1}{2} = \int_0^{\infty}f(\tau)e^{-\Lambda \tau}d\tau}
-							</script>
-						</p></div>
-
-
-
-
-						</section>
 
 
 						<!-- ########################################################## -->
@@ -635,25 +659,6 @@
 
 
 
-
-  <section>
-    <h2> Animations too! </h2>
-      <!-- <p> It's easy to embed <a href= "https://d3js.org/">d3.js </a> animations using <a href = "https://observablehq.com/"> observable notebooks </a>.
-     <div class="fragment">
-    	<div class="viewof-a"></div>
-  	<div class="win_chart" class="horizontal-center"></div>
-
-    	<script type="module">
-    	import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-    	import define from "https://api.observablehq.com/@elevien/kelly.js?v=3";
-    	(new Runtime).module(define, name => {
-    		if (name === "viewof a") return Inspector.into(".viewof-a")();
-    		if (name === "win_chart") return Inspector.into(".win_chart")();
-    		return ["data1"].includes(name) || null;
-    	});
-    	</script></div> -->
-
-    </section>
 
 
 			</div>
