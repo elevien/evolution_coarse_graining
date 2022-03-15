@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="./dist/reveal.css">
+		<link rel="stylesheet" href="./dist/theme/eal.css" id="theme">
+	</head>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="https://d3js.org/d3-timer.v1.min.js"></script>
+	<script src="https://d3js.org/d3-random.v1.min.js"></script>
+	<script src="https://d3js.org/d3-quadtree.v1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<style type="text/css">
+    code {
+      white-space: pre;
+    }
+
+    .MathJax_CHTML {
+			color:rgb(100, 100, 100);
+      font-size: 100% !important;
+    }
+		.container{
+		display: flex;
+		}
+		.col{
+		flex: 1;
+		}
+
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+
+  </style>
+
+
+
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+				<!-- ########################################################## -->
+				<section>
+					<h2>Title</h2>
+					 <!-- <img src="./figures/euler.png" height="400"> -->
+					<h3>Ethan Levien</h3>
+
+				</section>
+
+
+<!-- ########################################################## -->
+	<section>
+		<h2> Selection acts on phsiological traits? </h2>
+
+		<img src="./figures/scales.png">
+
+		<p> In the Moran model, natural selection acts on the growth rate, which determines $s$. But how does selection act on single-cell traits?</p>
+		</section>
+
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+		<section>
+<!-- ########################################################## -->
+        <section>
+				<h2> Evolution in the turbidostat </h2>
+
+				<img src="./figures/turbidostat.png" height="400">
+				<p>The turbidostat is a type of Continuous culture in which the population size is kept approximately constant through feedback between an optical density detector and a pump </p>
+
+			</section>
+
+
+
+<!-- ########################################################## -->
+			<section>
+			<h2> Evolution in the turbidostat </h2>
+			<p>
+		The basic dynamics in a continous culture can be understood from the ODE model for the number of cells of each genotype $n_i$ and the concentration of a limiting nutrient $c$:
+		\[\begin{aligned}
+			\frac{dn_i}{dt} &= \alpha_i(c)n_i - Dn_i\\
+			\frac{dc}{dt} &= Dc_0 - D\left(1+\frac{1}{\gamma}\right)c
+						\end{aligned}
+			\] </p>
+
+<div class = "fragment">
+			<p>In the turbidostat the dilution rate $D$ is adjusted to fix the total population size $N = \sum_i n_i$, which means
+			\[
+			\begin{equation}
+			D = \alpha_i(c)n_i \implies \frac{dD}{dt}
+			\end{equation}\]
+			which can be approximated from the growth bewteen dilutations.
+		</p></div>
+
+				</section>
+
+<!-- ########################################################## -->
+				<section>
+				<h2> Evolution in the turbidostat </h2>
+				<p> The concentration $c$ has a fixed point $c_0\gamma/(1+\gamma)$ leading to the so-called replicator equations for $\phi_i = n_i/N$:
+				\[
+				\frac{d\phi_i}{dt} = \phi_i\left(\alpha_i - D - \sum_j \phi_j(\alpha_j-D)\right)
+			\]  </p>
+
+			<div class = "fragment">
+						<p>With two species
+							\[
+							\frac{d\phi}{dt} =s\phi(1-\phi)
+						\]
+					</p></div>
+				</section>
+
+<!-- ########################################################## -->
+				<section>
+				<h2> Evolution in the turbidostat </h2>
+				<h4>Where does randomness come from?</h4>
+				<p> For any cell, random chance dictates whether it will get expelled from the culture during a dilution event. </p>
+				<p> Each cell has equal chance $1/N$ to be expelled, so chance mutant is expelled is $\phi$<p>
+
+				<div class = "fragment">
+							<p>This leads to SDE
+								\[
+								\frac{d\phi}{dt} =s\phi(1-\phi) + \sqrt{\frac{\phi(1-\phi)}{N}}
+							\]
+						</p></div>
+				</section>
+
+				<!-- ########################################################## -->
+				<section>
+				<h2> Some results about evolutionary dynamics </h2>
+				<p> In evolution, new genotypes are introduced into the population through mutations in single-cells. It is therefore natural to consider the Moran model with the initial condition $\phi = 1/N$. </p>
+				<!-- <p> We can now ask the biologically relavent questions: What is the chance of a mutant taking over the population? How long will it take to do so?  </p> -->
+
+				<p> We can understand the behavoir of a new mutant population by treating seperatly two regimes: one where fluctuations dominate and one where natural selection dominates  </p>
+
+
+			</section>
+
+
+			<!-- ########################################################## -->
+			<section>
+			<h2> Properties of the Moran model </h2>
+
+			<!-- <p> We can now ask the biologically relavent questions: What is the chance of a mutant taking over the population? How long will it take to do so?  </p> -->
+
+				<div class="r-stack">
+		  <img class="fragment current-visible" data-fragment-index="1" src="./figures/moran_fix1.svg">
+		  <img class="fragment current-visible" data-fragment-index="2" src="./figures/moran_fix2.svg">
+			 <img class="fragment current-visible" data-fragment-index="3" src="./figures/moran_fix3.svg">
+			  <img class="fragment current-visible" data-fragment-index="4" src="./figures/moran_fix4.svg">
+		</div>
+
+<div class="r-stack">
+		<p class="fragment current-visible" data-fragment-index="1">
+			We can understand the behavoir of a rate mutant by treating the dynamics seperatly before and after the dynamics become deterministic.
+		</p>
+		<p class="fragment current-visible" data-fragment-index="2">
+		At what mutant fraction does the transition occur?
+		 \[
+	\frac{d\phi}{dt} =s\phi(1-\phi) + \sqrt{\frac{\phi(1-\phi)}{N}} \approx s\phi + \sqrt{\phi/N}\xi
+				 \]
+	 	</p>
+
+		<p class="fragment current-visible" data-fragment-index="3">
+			We can show that
+	 	 \[
+	    CV = \frac{{\rm std}(\phi)}{\langle \phi\rangle} =\frac{1-e^{-st}}{Ns\phi_0} \to \frac{1}{Ns \phi_0}
+	  			\]
+		$1/sN$ is called the drift barrier and fluctuations dominate when $\phi_0 < 1/sN$. During this time,
+		\[\frac{d}{dt}\phi \approx \sqrt{\phi/N}\xi\]
+		  		</p>
+
+		<p class="fragment current-visible" data-fragment-index="4">
+		At after $\phi>1/Ns$, the $\phi$ grow deterministically:
+		\[\frac{d}{dt}\phi \approx s\phi \implies \phi = \frac{1}{sN}e^{st}  \]
+		The mutant clone will take-over the population in a time $\tau_{\rm sw}$, called the sweep time, which satisfies $\phi(\tau_{\rm sw}) = O(1)$ hence
+		\[
+		\tau_{\rm sw} = O\left(\ln(Ns)/s\right)\]
+		</p>
+
+
+
+
+
+
+
+			<!-- <p class="fragment current-visible" data-fragment-index="5">
+			 For  very small $\phi$:
+			 \[
+			 \Delta\phi = \phi(t+dt)-\phi(t) = s \phi(t)dt + \sqrt{dt\phi(t)/N}\xi \approx  \sqrt{dt\phi(t)/N}\xi
+			 		 \]
+
+			This approximation will be valid until $dt = O(\phi(t))$. 		</p>
+				</div> -->
+
+		</section>
+
+
+		<!-- ########################################################## -->
+		<section>
+		<h2> Properties of the Moran model </h2>
+					<h4>So what is the chance the mutant lineage reaches the drift barrier before going extinct?</h4>
+
+				<div class="r-stack">
+		<p class="fragment current-visible">
+		Below the drift barrier, we can approximate the dynamics over a small time $dt$ by
+			\[
+			\Delta \phi = \phi(t+\delta)-\phi(t) = \sqrt{\frac{\delta\phi(t)}{N}}Z,\quad Z \sim {\rm Normal}(0,1)
+			\]
+			This will approximation will give us an order-of-magnitude estimate of $\Delta \phi$ before some time $\delta^*$ when  $\delta^* = \phi(t)N$.
+		</p>
+
+		<p class="fragment current-visible">
+		 At $\delta^*$, the mutant fraction will have changed by $\pm \phi(t)$.This means the population has roughly an equal chance of doubling or going extinct over a time period $\delta^*$. 	</p>
+
+		 	<p class="fragment current-visible">
+				We can repeat this approximation iteratively. After $k$ iterations, we find that  the population size is
+			\[
+			\phi(t_k) = \left\{ \begin{array}{cl}
+			 2^k/N & \text{with prob. $1/2^k$}\\
+			  0 & \text{with prob. $1-1/2^k$}\end{array}\right.
+			\]
+			where
+			\[
+			t_k = t_{k-1} + \phi(t_{k-1})N = \sum_j 2^{j} \sim 2^k \implies k = \ln(t)/\ln(2)
+			\]
+		</p>
+
+		<p class="fragment current-visible">
+	Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the mutant size and chance of survival:
+		\[
+		\phi(t) = \left\{ \begin{array}{cl}
+		 t/N & \text{with prob. $1/t$}\\
+			0 & \text{with prob. $1-1/t$}\end{array}\right.
+		\]
+		So the population will reach a fraction $1/Ns = t/N$ after a time $t = 1/s$. The chance the survive until this time is $\sim s$.
+	</p>
+
+	</div>
+
+	</section>
+</section>
+
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<!-- ########################################################## -->
+<section>
+	<!-- ########################################################## -->
+		<section>
+			<h2> Selection acts on phsiological traits? </h2>
+
+			<img src="./figures/scales.png">
+
+
+			</section>
+
+		<!-- ########################################################## -->
+		<section>
+		<h2>Motivation from single-cell data</h2>
+
+						<iframe width="820" height="415"
+		src="https://www.youtube.com//embed/5PyoO4S3BU0">
+		</iframe>
+		<p>  Wang et al. Current Biology (2010) </p>
+
+			<h4> How do we translate measurments of single-cells to population/evolutionary dynamics?</h4>
+		</section>
+
+
+
+	<!-- ########################################################## -->
+		<section>
+		<h2>  The single-cell level </h2>
+
+		<div class="container">
+			<div class = "col">
+			<img src="./figures/roberts.png" height="400">
+				<p>  Wang et al. Current Biology (2010) </p>
+			</div>
+					<div class = "col">
+						</br>
+						<table>
+								<thead><tr>
+											<th>Phenotype</th>
+											<th>CV ($\sigma/\mu$)</th>
+									</tr></thead>
+									<tbody><tr>
+											<td>growth rates</td>
+											<td>$.06-.18$</td>
+									</tr>
+									<tr>
+											<td>generation times</td>
+											<td>$.18-.25$</td>
+									</tr>  <tr>
+												<td>size</td>
+												<td>$.19-.27$</td>
+										</tr></tbody>
+							</table>
+						</br>
+						<div class="fragment">
+							<h4> How does selection act on variation in these traits?  </h4>
+						</div>
+					</div>
+					</div>
+		</section>
+
+
+
+
+				<!-- ########################################################## -->
+				<section>
+				<h2>  The single-cell level </h2>
+				<p> A measure of an individual cells viability is its genertaion time. A cell with a shorter generation time will produce few offspring.  </p>
+				<p> Generation time is random, and correlated with many other traits. Natural to think about understanding adaptation in terms of $f(\tau)$ </p>
+
+
+				</section>
+
+
+				
+
+
+
+					<!-- ########################################################## -->
+					<section>
+					<h2> Bridging-scales </h2>
+					<p> How can we connect dynamics at the single-cell level to population level dynamics?  </p>
+				<p>	\[
+			 \frac{d}{dt} Q({\bf u},{\bf a},{\boldsymbol \lambda},{\bf s},t) + \sum_{k=1}^N \frac{\partial}{\partial a_k} Q({\bf u},{\bf a},{\boldsymbol \lambda},{\bf s},t)
+			 = - Q({\bf u},{\bf a},{\boldsymbol \lambda},{\bf s},t)\left(D+ \sum_{k=1}^N \gamma_{u_k}(a_k,\lambda_k,s_{b,k})\right) \]
+			along with the boundary conditions
+			 \[
+			Q(S_{k,u_v}({\bf u}),S_{k,0}(S_{v,0}({\bf a})),{\boldsymbol \lambda},
+			S_{k,s_{b,v}e^{\lambda a_v}/2}(S_{v,s_{b,v}e^{\lambda a_v}/2}({\bf s})),t)\\
+			\quad\quad= \frac{g(\lambda_k)g(\lambda_v)}{N}\int\int \gamma_{u_v}(a_v,\lambda_v,s_{b,v})
+			\times Q({\bf u},{\bf a},S_{v,\lambda_v'}S_{k,\lambda_k'}(({\boldsymbol \lambda})),{\bf s},t)d\lambda_k'd\lambda_v'.\]</p>
+				<h4> Note that useful for understanding qualitative phenomenon  </h4>
+				</section>
+
+
+<!-- ########################################################## -->
+	<section>
+		<h2> Selection acts on phsiological traits? </h2>
+		<h4> Key challange: single-cells do not have well defined growth rate  </h4>
+
+		<p> The population growth rate is an emergent property of single-cell dynamics.</p>
+		</section>
+
+						<!-- ########################################################## -->
+						<section>
+						<h2> Bridging-scales </h2>
+						<h4> Question: can we coarse-grain to get an effective SDE?  If so, what are the parameters? </h4>
+
+						<p> When $\phi$ is not "too small", we can approximate
+						\[
+						\frac{d}{dt}\phi = s_{\rm eff}\phi(1-\phi)$
+					\]
+					So what about the noise, maybe
+					\[
+					\frac{d}{dt}\phi = s_{\rm eff}\phi(1-\phi) + \sqrt{\phi(1-\phi)/N_{\rm eff}}\xi$
+				\]
+				 </p>
+
+				<p>If this is true, we can obtain the classical formula for fixation probability </p>
+
+					</section>
+							</section>
+
+					<!-- ########################################################## -->
+					<section>
+					<h2>Nuetral dynamics </h2>
+					<p> To explore the effects of age-structure we focus on the simple case where generation times are drawn independently from a Gamma distribution
+						\[
+						f(\tau) = \frac{\beta^{-\alpha}e^{\tau/\beta}\tau^{\alpha-1}}{\Gamma(\alpha)}
+						\]
+						This has the property that it interpolates between perfectly deterministic genertaion times and exponential case. </p>
+					</section>
+
+					<!-- ########################################################## -->
+					<section>
+					<h2>Nuetral dynamics </h2>
+					<p> We can show that in the case ${\rm CV} \approx 0$,
+					\[
+					{\rm var}(\phi) \approx \frac{3\ln(2)}{8N}t
+				\] </p>
+
+				<p> This would suggest that $N_{\rm eff}  = 4/3\ln(2)N$ and therefore $p_{\rm fix} \sim </p>
+					</section>
+
+					<!-- ########################################################## -->
+					<section>
+					<h2>The coalescent </h2>
+					<p> We can understand the different with coelecent theory </p>
+					</section>
+
+					<!-- ########################################################## -->
+					<section>
+					<h2>Fixation probability </h2>
+					<p> We can show
+					\[
+			p_{\rm fix} =  \frac{2}{{\rm CV}_{\tau}^2}\left(1-2^{-{\rm CV}_{\tau}^2} \right)s + O(s^2).\]</p>
+
+
+					</section>
+
+					<!-- ########################################################## -->
+					<section>
+					<h2>Fixation probability </h2>
+					<p>Notice that as ${\rm CV}\to 0$, we obtain $p_{\rm fix} 2\ln(2)s \ne N/N_{\rm eff}s$. </p>
+
+					<h4>We cannot capature the dynamics by rescaling Moran SDE -- connection between genetic drift and fixation breaks down. </h4>
+
+
+					</section>
+
+</section>
+
+
+
+
+<section>
+						<!-- ########################################################## -->
+						<section>
+						<h2> Branching process model </h2>
+						<p> Euler was thinking about a population humans, but it's actually easier to think about of population of cells (e.g. bacteria) undergoing binary fission </p>
+					<div class = "fragment">	<p> Alfred Lotka (1934), Bellman and Harris (1948) and Powell (1956): Each cell's generation time is drawn <b>independently</b> from a distribution $f(\tau)$.</p>	</div>
+
+						<div class = "fragment">
+						<div class="viewof-sigma" class="horizontal-center"></div>
+						<div class="tree" ></div>
+						<script type="module">
+						import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+						import define from "https://api.observablehq.com/@elevien/branching-process/2.js?v=3";
+						(new Runtime).module(define, name => {
+							if (name === "viewof sigma") return Inspector.into(".viewof-sigma")();
+							if (name === "tree") return Inspector.into(".tree")();
+							return ["tree_data1"].includes(name) || null;
+						});
+						</script></div>
+
+
+						<div class = "fragment">
+						<p> In the long-term, ${\mathbb E}[N(t)] = Ae^{\Lambda t}$ for some $\Lambda$. </p>
+						</div>
+						<div class = "fragment">
+						<h4> How does the rate at which the population grows depend on the distribution of generation times? </h4>
+						</div>
+
+
+
+						</section>
+
+
+
+
+						<!-- ########################################################## -->
+						<section>
+						<h2> Branching process model </h2>
+
+						<div class="recursive_tree"></div>
+						<script type="module">
+						import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+						import define from "https://api.observablehq.com/@elevien/branching-process/2.js?v=3";
+						(new Runtime).module(define, name => {
+						if (name === "recursive_tree") return Inspector.into(".recursive_tree")();
+						});
+						</script>
+
+
+						<div class="fragment">
+						<p>The root cell has two daughters with progenies that grow exponentially at the same rate $\Lambda$. </p></div>
+						<div class="fragment"><p> Let $\tau$ be the first cell's generation time:
+						<script type="math/tex; mode=display">
+						{\mathbb E}\left[N_{\rm daughter}|\tau\right] = Ae^{\Lambda(t-\tau)} \implies
+						{\mathbb E}\left[N_{\rm daughter}\right] = 	A \int_0^{\infty} e^{\Lambda(t-\tau)}f(\tau)d\tau
+						</script>
+						<!-- <script type="math/tex; mode=display">
+						N_{\rm daughter}(t|\tau)= Ae^{\Lambda(t-\tau)} \implies
+						{\mathbb E}_f\left[N_{\rm daughter}(t|\tau)\right] = 	A \int_0^{\infty} e^{\Lambda(t-\tau)}f(\tau)d\tau
+						</script> -->
+						</p>
+						<div>
+
+						<div class="fragment">
+						<p> Writing the population size at time $t$ in terms of the size of both daughter progenies gives the so-called Euler-Lotka Formula
+							<script type="math/tex; mode=display">
+						Ae^{\Lambda t} = 	\color{rgb(20, 116, 111)}{{\mathbb E}\left[N_{\text{left daughter}}\right]} + \color{rgb(205, 88, 73)}	{{\mathbb E}\left[N_{\text{right daughter}}\right]}  = 2 A \int_0^{\infty} e^{\Lambda(t-\tau)}f(\tau)d\tau \implies \color{rgb(5, 5, 5)}{	\frac{1}{2} = \int_0^{\infty}f(\tau)e^{-\Lambda \tau}d\tau}
+							</script>
+						</p></div>
+
+
+
+
+						</section>
+
+
+						<!-- ########################################################## -->
+						<section>
+						<h2> The Euler-Lotka equation </h2>
+						<p>	We have derived the <b>the Euler-Lotka equation.</b>
+							<script type="math/tex; mode=display">
+								\frac{1}{2} = \int_0^{\infty}f(\tau)e^{-\Lambda \tau}d\tau = {\mathbb E}_f\left[e^{-\Lambda \tau}  \right].
+							</script>
+						</p>
+
+						<div class="fragment">
+
+						<p> If all cells live for exactly a time $\tau$, then $N(t) = 2^{t/\tau}$, so the rate of exponential growth is
+							<script type="math/tex; mode=display">
+						\Lambda = \ln(2)/\tau
+							</script></p></div>
+
+						<div class="fragment">
+						<p>
+							<b>Jensen's inequality</b> tells us
+							<script type="math/tex; mode=display">
+							\frac{1}{2} = {\mathbb E}_f\left[e^{-\Lambda \tau}  \right] \ge e^{-\Lambda {\mathbb E}_f[\tau]}
+							 \implies \Lambda \ge  \ln(2)/{\mathbb E}_f[\tau]
+							</script>
+						</p>
+						</div>
+
+						<div class="fragment">
+						<h4> If we fix the average generation time then variability will increase the rate of growth. </h4>
+						</div>
+
+
+						<!-- <div class="fragment">
+						<p>	Let's consider two limits:
+						<ul>
+							<li> All cells live for exactly a time $\tau_0$. Then we have
+								<script type="math/tex; mode=display">
+									\frac{1}{2} = e^{-\Lambda \tau_0} \implies \Lambda = \frac{\ln(2)}{\tau_0}
+								</script>
+							 </li>
+
+							 <li> Cells have a constant probability $1/\tau_0$ of dividing per unit time. Then
+								 <script type="math/tex; mode=display">
+									 \frac{1}{2} = \int_0^{\infty}e^{-\tau/\tau_0-\Lambda \tau}d\tau \implies \Lambda =\frac{1}{\tau_0}
+								 </script>
+							 </li>
+						</ul></p>
+						</div> -->
+
+
+						</section>
+
+
+						<!-- ########################################################## -->
+						<section>
+						<h2>Motivation from single-cell data</h2>
+
+
+						<img src="./figures/variability.png" >
+						<p> Eldar and Elowitz, Nature (2010) </p>
+
+						<!-- <div class="fragment">
+						<h4> &ldquo;Do Differences Make a Difference?&rdquo; - Altschuler and Wu (2010)</h4>
+					</div> -->
+						</section>
+
+
+						<!-- ########################################################## -->
+						<!-- <section>
+						<h2>Motivation from single-cell data</h2>
+
+						<img src="./figures/persisters.png" >
+						<p>  Balaban et al. Science (2004) </p>
+
+						</section> -->
+
+
+
+
+
+
+
+
+
+
+																	<!-- ########################################################## -->
+																	<section>
+																		<h2> Generalized Euler-Lotka Formula  </h2>
+
+																		<p>	The Euler-Lotka formula has an elagent generalization to the case where cell's generation times are correlated with their ancestors (Lebowitz et al., 1974):
+																			<script type="math/tex; mode=display">
+																				\frac{1}{2} = \int_0^{\infty} \color{rgb(20, 116, 111)}{f_{\rm tree}(\tau)}e^{-\Lambda \tau}d\tau = {\mathbb E}_{\rm tree}\left[e^{-\Lambda \tau}  \right].
+																			</script>
+																			where $\color{rgb(20, 116, 111)}{f_{\rm tree}(\tau)}$ is the distribution of generation times <b> taken over all cells </b> throughout the history of an exponentially growing population.
+																		</p>
+
+																<div class="fragment">		<div class="tree_vs_lineage"></div>
+
+						<script type="module">
+						import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+						import define from "https://api.observablehq.com/@elevien/lineage-representation.js?v=3";
+						(new Runtime).module(define, name => {
+						  if (name === "tree_vs_lineage") return Inspector.into(".tree_vs_lineage")();
+						});
+						</script>
+						<p> In general $\color{rgb(20, 116, 111)}{f_{\rm tree}(\tau)} \ne  \color{rgb(205, 88, 73)}{f(\tau)}$ </p></div>
+						<div class = "fragment">
+						<p> $\implies$ does not connect growth rate to lineage dynamics!</p>
+					</div>
+
+
+									</section>
+								</section>
+
+
+
+
+
+
+
+
+
+
+
+
+  <section>
+    <h2> Animations too! </h2>
+      <!-- <p> It's easy to embed <a href= "https://d3js.org/">d3.js </a> animations using <a href = "https://observablehq.com/"> observable notebooks </a>.
+     <div class="fragment">
+    	<div class="viewof-a"></div>
+  	<div class="win_chart" class="horizontal-center"></div>
+
+    	<script type="module">
+    	import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+    	import define from "https://api.observablehq.com/@elevien/kelly.js?v=3";
+    	(new Runtime).module(define, name => {
+    		if (name === "viewof a") return Inspector.into(".viewof-a")();
+    		if (name === "win_chart") return Inspector.into(".win_chart")();
+    		return ["data1"].includes(name) || null;
+    	});
+    	</script></div> -->
+
+    </section>
+
+
+			</div>
+
+		</div>
+
+		<script src="./dist/reveal.js"></script>
+		<script src="./plugin/math/math.js"></script>
+		<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+		<script>
+
+			Reveal.initialize({
+				center: false,
+				history: true,
+				transition: 'none',
+
+				math: {
+					// mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+					config: 'TeX-AMS_HTML-full',
+					TeX: {
+						Macros: {
+							R: '\\mathbb{R}',
+							set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+						}
+					}
+				},
+
+				plugins: [ RevealMath ]
+			});
+
+		</script>
+
+
+
+	</body>
+</html>

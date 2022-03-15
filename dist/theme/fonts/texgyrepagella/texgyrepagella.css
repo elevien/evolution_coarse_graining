@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'texgyrepagella';
+    src: url('./texgyrepagella-regular.otf');
+    src: url('./texgyrepagella-regular') format('embedded-opentype'),
+         url('./texgyrepagella-regular.otf') format('woff'),
+         url('./texgyrepagella-regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
