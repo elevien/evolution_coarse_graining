@@ -281,64 +281,24 @@
 		</iframe>
 		<p>  Wang et al. Current Biology (2010) </p>
 
-			<h4> How do we translate measurments of single-cells to population/evolutionary dynamics?</h4>
 		</section>
-
-
-
-	<!-- ########################################################## -->
-		<section>
-		<h2>  The single-cell level </h2>
-
-		<div class="container">
-			<div class = "col">
-			<img src="./figures/roberts.png" height="400">
-				<p>  Wang et al. Current Biology (2010) </p>
-			</div>
-					<div class = "col">
-						</br>
-						<table>
-								<thead><tr>
-											<th>Phenotype</th>
-											<th>CV ($\sigma/\mu$)</th>
-									</tr></thead>
-									<tbody><tr>
-											<td>growth rates</td>
-											<td>$.06-.18$</td>
-									</tr>
-									<tr>
-											<td>generation times</td>
-											<td>$.18-.25$</td>
-									</tr>  <tr>
-												<td>size</td>
-												<td>$.19-.27$</td>
-										</tr></tbody>
-							</table>
-						</br>
-						<div class="fragment">
-							<h4> How does selection act on variation in these traits?  </h4>
-						</div>
-					</div>
-					</div>
-		</section>
-
-
-
 
 				<!-- ########################################################## -->
 				<section>
-				<h2>  The single-cell level </h2>
+				<h2>Motivation from single-cell data</h2>
+
 				<p> A measure of an individual cells viability is its genertaion time. A cell with a shorter generation time will produce few offspring.  </p>
-				<p> Generation time is random, and correlated with many other traits. Natural to think about understanding adaptation in terms of $f(\tau)$ </p>
-
-
+				<img class = "fragment" src="./figures/mm_drawing.png">
+				<p class = "fragment"> Generation time is random, and correlated with many other traits. Natural to think about understanding adaptation in terms of $f(\tau)$ </p>
 				</section>
+
+
 
 
 				<!-- ########################################################## -->
 				<section>
 				<h2> Branching process model </h2>
-				<h4 class = "fragment"> Start with simpler case: exponential growth with age structure  </h4>
+				<p class = "fragment"> Start with simpler case: exponential growth with age structure  </p>
 				<div class = "fragment">	<p> Alfred Lotka (1934), Bellman and Harris (1948) and Powell (1956): Each cell's generation time is drawn <b>independently</b> from a distribution $f(\tau)$.</p>	</div>
 
 				<div class = "fragment">
@@ -441,31 +401,25 @@
 						 <p> We don't really care about $Q$ though! we are interested in the behavoir of the mutant fraction $\phi$. </p>
 						<h4 class="fragment"> Question: can we coarse-grain to get an effective SDE?  If so, what are the parameters? </h4>
 
-						<p class="fragment"> Let's start by assuming a large mutant fraction. We assume the wildtype population grows at a rate $1$ and the mutant population grows at a rate $s$.
+						<p class="fragment"> Let's start by assuming a large mutant fraction with long-term growth rate $\Lambda_m$ competing with resident population with growth rate $\Lambda_r=1$. </p>
 
-							When $\phi$ is not "too small", we can approximate
+								<p class="fragment"> When $\phi$ is not "too small", we can approximate
 						\[
-						\frac{d}{dt}\phi = \frac{1}{N}\frac{d}{dt}m - \frac{\phi}{N}\frac{d}{dt}N\\
-						\quad\quad = s_{\rm eff}\phi(1-\phi)
+						\frac{d}{dt}\phi = \frac{1}{N}\frac{d}{dt}m - \frac{\phi}{N}\frac{d}{dt}N = \Lambda_m \phi - \phi(\Lambda_m\phi +\Lambda_r (1-\phi) ) = s\phi(1-\phi)
 					\] <p>
+
+						<p class="fragment">
+						We might guess that the corresponding SDE is something like
+						\[
+						\frac{d}{dt}\phi = s_{\rm eff}\phi(1-\phi) + \sqrt{\phi(1-\phi)/N_{\rm eff}}\xi
+					\]
+					This would imply $p_{\rm fix } \sim s\frac{N_{\rm eff}}{N}$
+					 </p>
+
+
 
 			</section>
 
-
-					<!-- ########################################################## -->
-					<section>
-					<h2> Bridging-scales </h2>
-					<p>
-					We might guess that the corresponding SDE is something like
-					\[
-					\frac{d}{dt}\phi = s_{\rm eff}\phi(1-\phi) + \sqrt{\phi(1-\phi)/N_{\rm eff}}\xi
-				\]
-				This would imply $p_{\rm fix } \sim s\frac{N_{\rm eff}}{N}$
-				 </p>
-
-
-
-					</section>
 							</section>
 
 
