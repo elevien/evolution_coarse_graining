@@ -53,8 +53,10 @@
 			<div class="slides">
 				<!-- ########################################################## -->
 				<section>
-					<h2>Title</h2>
+					<h2>Coarse graining evolutionary dynamics models</h2>
 					 <!-- <img src="./figures/euler.png" height="400"> -->
+
+					 	<img src="./figures/lineages1.svg">
 					<h3>Ethan Levien</h3>
 
 				</section>
@@ -66,7 +68,7 @@
 
 		<img src="./figures/scales.png">
 
-		<p> In the Moran model, natural selection acts on the growth rate, which determines $s$. But how does selection act on single-cell traits?</p>
+		<p> The central challange in evolution is to connect processes across a range of spatial and temporal scales: evolution plays out at population level but is constrained by microscopic interactions</p>
 		</section>
 
 <!-- ########################################################## -->
@@ -78,11 +80,14 @@
 		<section>
 <!-- ########################################################## -->
         <section>
-				<h2> Evolution in the turbidostat </h2>
-
-				<img src="./figures/turbidostat.png" height="400">
-				<p>The turbidostat is a type of Continuous culture in which the population size is kept approximately constant through feedback between an optical density detector and a pump </p>
-
+				<h2> Part 1: The population scale </h2>
+					<div class="r-stack">
+				<img src="./figures/turbidostat.png" height="400" data-fragment-index="1">
+				<img class="fragment current-visible" src="./figures/eVOLVER.png" height="400" data-fragment-index="3">
+			</div>
+				<!-- <p>The turbidostat is a type of Continuous culture in which the population size is kept approximately constant through feedback between an optical density detector and a pump </p> -->
+				<p class = "fragment" data-fragment-index="1">Let us begin by introducing evolutionary dynamics models without reference to the single-cell scale.  </p>
+				<p class = "fragment" data-fragment-index="2">To keep the discussion biologically grounded, we will imagine evolution playing out in a continous culture.  </p>
 			</section>
 
 
@@ -91,63 +96,99 @@
 			<section>
 			<h2> Evolution in the turbidostat </h2>
 			<p>
-		The basic dynamics in a continous culture can be understood from the ODE model for the number of cells of each genotype $n_i$ and the concentration of a limiting nutrient $c$:
-		\[\begin{aligned}
-			\frac{dn_i}{dt} &= \alpha_i(c)n_i - Dn_i\\
-			\frac{dc}{dt} &= Dc_0 - D\left(1+\frac{1}{\gamma}\right)c
-						\end{aligned}
-			\] </p>
+		The basic dynamics in a continous culture can be understood from the ODE model for the number of cells of each genotype $n_i$:
+		\[
+			\frac{dn_i}{dt} = \underbrace{\alpha_i(c)n_i}_{\text{growth}} - \underbrace{Dn_i}_{\text{dilution}}
+			\]</p>
+			<p class = "fragment" data-fragment-index="2">
+				The growth rates depend on a limiting nutient:
+				\[
+			\frac{dc}{dt} = \underbrace{Dc_0}_{\text{media in}}- \underbrace{Dc}_{\text{dilution}}
+- \underbrace{\gamma^{-1}\left[\sum_i\rho_i(c)n_i\right]c}_{\text{nurtient update}}
+\] </p>
 
-<div class = "fragment">
-			<p>In the turbidostat the dilution rate $D$ is adjusted to fix the total population size $N = \sum_i n_i$, which means
+<div class="r-stack">
+			<p class="fragment current-visible" data-fragment-index="3">In the <strong> turbidostat </strong> the dilution rate $D$ is adjusted to fix the total population size $N = \sum_i n_i$, which means
 			\[
 			\begin{equation}
-			D = \alpha_i(c)n_i \implies \frac{dD}{dt}
+			D = \rho_i(c)n_i \implies c  \to \frac{\gamma c_0}{\gamma+1}
 			\end{equation}\]
-			which can be approximated from the growth bewteen dilutations.
-		</p></div>
+		</p>
+
+		<p class="fragment current-visible" data-fragment-index="4"> We obtain the so-called replicator equations for the genotype fractions $\phi_i = n_i/N$:
+			\[
+			\frac{d\phi_i}{dt} = \phi_i\left(\alpha_i - D - \sum_j \phi_j(\rho_j-D)\right)
+		\]
+	</p>
+
+	<p class="fragment current-visible" data-fragment-index="5"> In general, dynamics are difficult to solve, but with two species these become logistic growth:
+		\[
+		\frac{d\phi}{dt} = (\rho_1 - \rho_2)\phi(1-\phi)
+	\]
+</p>
+	</div>
 
 				</section>
 
-<!-- ########################################################## -->
-				<section>
-				<h2> Evolution in the turbidostat </h2>
-				<p> The concentration $c$ has a fixed point $c_0\gamma/(1+\gamma)$ leading to the so-called replicator equations for $\phi_i = n_i/N$:
-				\[
-				\frac{d\phi_i}{dt} = \phi_i\left(\alpha_i - D - \sum_j \phi_j(\alpha_j-D)\right)
-			\]  </p>
-
-			<div class = "fragment">
-						<p>With two species
-							\[
-							\frac{d\phi}{dt} =s\phi(1-\phi)
-						\]
-					</p></div>
-				</section>
 
 <!-- ########################################################## -->
 				<section>
-				<h2> Evolution in the turbidostat </h2>
-				<h4>Where does randomness come from?</h4>
-				<p> For any cell, random chance dictates whether it will get expelled from the culture during a dilution event. </p>
-				<p> Each cell has equal chance $1/N$ to be expelled, so chance mutant is expelled is $\phi$<p>
+				<h2> The Moran process </h2>
+				<p>These equations work well when $\phi$ is not too small, but new mutations emerge in single-cells, so $\phi(0) = 1/N$.</p>
 
-				<div class = "fragment">
-							<p>This leads to SDE
-								\[
-								\frac{d\phi}{dt} =s\phi(1-\phi) + \sqrt{\frac{\phi(1-\phi)}{N}}
-							\]
-						</p></div>
+				<h4 class = "fragment">Model must include fluctuations $\color{rgb(20, 116, 111)}{\implies}$ demands we make assumptions about single-cell dynamics </h4>
+				<p class = "fragment"> <strong> Standard approach (Moran process): </strong> <p>
+					<p> <ul> <li class = "fragment">Take cell division to be a Poission process; that is, time between cell divisions is exponentially distributed at a rate detemined by the genotypes growth rate: \[ p_i(\tau) = \rho_ie^{-\rho_i\tau}
+				\]  </li>
+				<li class = "fragment"> Every time a cell divides another cell is expelled from the culture in order to keep $N$ fixed. </li>
+			</ul>
 				</section>
 
 				<!-- ########################################################## -->
 				<section>
-				<h2> Some results about evolutionary dynamics </h2>
-				<p> In evolution, new genotypes are introduced into the population through mutations in single-cells. It is therefore natural to consider the Moran model with the initial condition $\phi = 1/N$. </p>
-				<!-- <p> We can now ask the biologically relavent questions: What is the chance of a mutant taking over the population? How long will it take to do so?  </p> -->
+				<h2> The Moran process </h2>
+					<img src="./figures/lineages2.svg" height="400">
+				</section>
 
-				<p> We can understand the behavoir of a new mutant population by treating seperatly two regimes: one where fluctuations dominate and one where natural selection dominates  </p>
+<!-- ########################################################## -->
+				<section>
+					<h2> The Moran process </h2>
+					<p class = "fragment" data-fragment-index="1"> This means that over a small time interval $\Delta t$, the number of mutants gained and lost is
+					\[\begin{aligned}\text{# of mutants gained} &\sim {\rm Poission}(N\rho_1\phi(1-\phi) \Delta t)\\
+					\text{# of mutants lost} &\sim {\rm Poission}(N\rho_2\phi(1-\phi) \Delta t)
+					\end{aligned}\]</p>
 
+					<div class="r-stack">
+					<p class="fragment current-visible" data-fragment-index="3"> We can calculate the mean and variance of $\Delta \phi$:
+						\[\begin{aligned}\langle  \Delta \phi \rangle &= (\rho_1 - \rho_2)\phi(1-\phi)\Delta t\\
+						{\rm var} \left(\Delta \phi \right) &= \frac{(\rho_1 + \rho_2)}{N}\phi(1-\phi)\Delta t
+					\end{aligned}\]
+				For simplicty we set $\rho_r = 1$ and $\rho_1 = 1+s$</p>
+				<p class="fragment" data-fragment-index="4">
+					Corresponds to SDE
+					\[
+					\frac{d}{dt}\phi = \underbrace{s\phi(1-\phi)}_{\text{selection}} + \underbrace{\sqrt{\frac{\phi(1-\phi)}{N}}\xi}_{\text{drift}}
+					\]
+				</p></div>
+
+				<p class="fragment" data-fragment-index="4">
+					or the Fokker-Plank equation
+					\[
+					\frac{\partial}{\partial}p(\phi,t) = -\frac{\partial}{\partial \phi}[s\phi(1-\phi)p(\phi,t)] + \frac{\partial^2}{\partial \phi^2}\left[\frac{\phi(1-\phi)}{N}p(\phi,t) \right]
+					\]
+				</p>
+
+				</section>
+
+				<!-- ########################################################## -->
+				<section>
+				<h2> Properties of the Moran model </h2>
+						<p> Some trajectories starting on $\phi(0) = 1/N$  </p>
+						<div class="r-stack">
+						<img class="fragment" src="./figures/moran_fix1.svg" data-fragment-index="1">
+						<img class="fragment" src="./figures/moran_fix2.svg" data-fragment-index="3" >
+					</div>
+						<p class="fragment" data-fragment-index="2" > The behavoir spends stronly on whether selection or drifts dominates. When does the transition occur? </p>
 
 			</section>
 
@@ -156,63 +197,66 @@
 			<section>
 			<h2> Properties of the Moran model </h2>
 
-			<!-- <p> We can now ask the biologically relavent questions: What is the chance of a mutant taking over the population? How long will it take to do so?  </p> -->
+			<div class="r-stack">
+			<p class="fragment current-visible" data-fragment-index="1" > We know it must be when $\phi$ is small, so we make the approximation
+				\[
+		 \frac{d\phi}{dt} =s\phi(1-\phi) + \sqrt{\frac{\phi(1-\phi)}{N}} \approx s\phi + \sqrt{\phi/N}\xi
+						\]
+			 </p>
 
-				<div class="r-stack">
-		  <img class="fragment current-visible" data-fragment-index="1" src="./figures/moran_fix1.svg">
-		  <img class="fragment current-visible" data-fragment-index="2" src="./figures/moran_fix2.svg">
-			 <img class="fragment current-visible" data-fragment-index="3" src="./figures/moran_fix3.svg">
-			  <img class="fragment current-visible" data-fragment-index="4" src="./figures/moran_fix4.svg">
-		</div>
-
-<div class="r-stack">
-		<p class="fragment current-visible" data-fragment-index="1">
-			We can understand the behavoir of a rate mutant by treating the dynamics seperatly before and after the dynamics become deterministic.
-		</p>
-		<p class="fragment current-visible" data-fragment-index="2">
-		At what mutant fraction does the transition occur?
-		 \[
-	\frac{d\phi}{dt} =s\phi(1-\phi) + \sqrt{\frac{\phi(1-\phi)}{N}} \approx s\phi + \sqrt{\phi/N}\xi
-				 \]
-	 	</p>
-
-		<p class="fragment current-visible" data-fragment-index="3">
-			We can show that
-	 	 \[
-	    CV = \frac{{\rm std}(\phi)}{\langle \phi\rangle} =\frac{1-e^{-st}}{Ns\phi_0} \to \frac{1}{Ns \phi_0}
-	  			\]
-		$1/sN$ is called the drift barrier and fluctuations dominate when $\phi_0 < 1/sN$. During this time,
-		\[\frac{d}{dt}\phi \approx \sqrt{\phi/N}\xi\]
-		  		</p>
-
-		<p class="fragment current-visible" data-fragment-index="4">
-		At after $\phi>1/Ns$, the $\phi$ grow deterministically:
-		\[\frac{d}{dt}\phi \approx s\phi \implies \phi = \frac{1}{sN}e^{st}  \]
-		The mutant clone will take-over the population in a time $\tau_{\rm sw}$, called the sweep time, which satisfies $\phi(\tau_{\rm sw}) = O(1)$ hence
-		\[
-		\tau_{\rm sw} = O\left(\ln(Ns)/s\right)\]
-		</p>
+			 <p class="fragment" data-fragment-index="2" > Implies the PDE
+				 \[
+				\frac{\partial}{\partial}p(\phi,t) = -\frac{\partial}{\partial \phi}[s\phi p(\phi,t)] + \frac{\partial^2}{\partial \phi^2}\left[\frac{\phi}{N}p(\phi,t) \right]
+				\]
+			</p></div>
 
 
+			<p class = "fragment" data-fragment-index = "3">
+				We can use this to calculate the mean and variance
+				\[
+				\begin{aligned}
+				\langle \phi \rangle &= \phi(0)e^{st}\\
+				{\rm var}(\phi ) &= \phi(0)e^{st}(1-e)\\
+					\end{aligned}
+				\]
+				 </p>
 
-
-
-
-
-			<!-- <p class="fragment current-visible" data-fragment-index="5">
-			 For  very small $\phi$:
+		 <p class = "fragment" data-fragment-index = "3">
+			The coefficient of variation
 			 \[
-			 \Delta\phi = \phi(t+dt)-\phi(t) = s \phi(t)dt + \sqrt{dt\phi(t)/N}\xi \approx  \sqrt{dt\phi(t)/N}\xi
-			 		 \]
+		    CV = \frac{{\rm std}(\phi)}{\langle \phi\rangle} =\frac{1-e^{-st}}{Ns\phi_0} \to \frac{1}{Ns \phi_0}
+		  			\]
+				</p>
 
-			This approximation will be valid until $dt = O(\phi(t))$. 		</p>
-				</div> -->
+				<p class = "fragment" data-fragment-index = "4">
+				 $1/Ns$ is called the <strong> Drift barrier </strong>
+					 </p>
+			</section>
 
+
+			<!-- ########################################################## -->
+			<section>
+			<h2> Properties of the Moran model </h2>
+
+					<div class="r-stack">
+					<img class="fragment" src="./figures/moran_fix1.svg" data-fragment-index="1">
+					<img class="fragment" src="./figures/moran_fix2.svg" data-fragment-index="3" >
+				</div>
+					<div class="r-stack">
+					<div class="fragment current-visible" data-fragment-index="2" > <p> <strong> Fluctuations dominate: </strong> This means $\langle \phi \rangle= 0$ and $\sqrt{\langle  \phi^2\rangle} \approx t/N\phi_0$. </p>
+						<p> But if $\phi=0$ mutant is extinct forever, so really we expect $\phi = O(t/N\phi_0)$ or $\phi$ is extinct. Each unit time the mutant is equally likely to go exitinct or grow, so the chance of surviving until time $t$ is $1/t$. </p>
+					</div>
+
+					<div class="fragment current-visible" data-fragment-index="3" > <p> <strong> Selection dominates: </strong> This just logistic growth. </p>
+						<p> <strong> Fxiation probability: </strong> The analysis tells us the chance to reach the drift barrier is $1/s$ </p>
+					</div>
+				</div>
 		</section>
 
 
+
 		<!-- ########################################################## -->
-		<section>
+		<!-- <section>
 		<h2> Properties of the Moran model </h2>
 					<h4>So what is the chance the mutant lineage reaches the drift barrier before going extinct?</h4>
 
@@ -253,7 +297,7 @@
 
 	</div>
 
-	</section>
+	</section> -->
 </section>
 
 <!-- ########################################################## -->
@@ -441,7 +485,7 @@
 					{\rm var}(\phi) \approx \frac{t}{N}
 				\] </p>
 
-				<p> What about the case when generation times are perfectly deterministic? </p> 
+				<p> What about the case when generation times are perfectly deterministic? </p>
 
 				<p> This would suggest that $N_{\rm eff}  = 4/3\ln(2)N$ and therefore $p_{\rm fix} \sim </p>
 					</section>
