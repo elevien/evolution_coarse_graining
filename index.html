@@ -98,7 +98,7 @@
 			<p>
 		The basic dynamics in a continous culture can be understood from the ODE model for the number of cells of each genotype $n_i$:
 		\[
-			\frac{dn_i}{dt} = \underbrace{\alpha_i(c)n_i}_{\text{growth}} - \underbrace{Dn_i}_{\text{dilution}}
+			\frac{dn_i}{dt} = \underbrace{\rho_i(c)n_i}_{\text{growth}} - \underbrace{Dn_i}_{\text{dilution}}
 			\]</p>
 			<p class = "fragment" data-fragment-index="2">
 				The growth rates depend on a limiting nutient:
@@ -136,19 +136,19 @@
 				<h2> Evolution in the Moran model </h2>
 				<p>These equations work well when $\phi$ is not too small, but new mutations emerge in single-cells, so $\phi(0) = 1/N$.</p>
 
-				<h4 class = "fragment">Model must include fluctuations $\color{rgb(20, 116, 111)}{\implies}$ demands we make assumptions about single-cell dynamics </h4>
-				<p class = "fragment"> <strong> Standard approach (Moran process): </strong> <p>
-					<p> <ul> <li class = "fragment">Take cell division to be a Poission process; that is, time between cell divisions is exponentially distributed at a rate detemined by the genotypes growth rate: \[ p_i(\tau) = \rho_ie^{-\rho_i\tau}
+				<h4 class = "fragment">Model must include fluctuations! This demands we make assumptions about single-cell dynamics </h4>
+
+				<div class="r-stack">
+				<div class = "fragment current-visible">
+				<p > <strong> Standard approach (Moran process): </strong> <p>
+					<p> <ul> <li>Take cell division to be a Poission process; that is, time between cell divisions is exponentially distributed at a rate detemined by the genotypes growth rate: \[ p_i(\tau) = \rho_ie^{-\rho_i\tau}
 				\]  </li>
-				<li class = "fragment"> Every time a cell divides another cell is expelled from the culture in order to keep $N$ fixed. </li>
-			</ul>
+				<li> Every time a cell divides another cell is expelled from the culture in order to keep $N$ fixed. </li>
+			</ul></div>
+	<img class = "fragment current-visible" src="./figures/lineages2.svg">
+		</div>
 				</section>
 
-				<!-- ########################################################## -->
-				<section>
-				<h2> Evolution in the Moran model </h2>
-					<img src="./figures/lineages2.svg" height="400">
-				</section>
 
 <!-- ########################################################## -->
 				<section>
@@ -332,7 +332,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 <section>
 	<!-- ########################################################## -->
 		<section>
-			<h2> Selection acts on phsiological traits? </h2>
+			<h2> Part 2: Single-cell dynamics </h2>
 
 			<img src="./figures/scales.png">
 
@@ -365,7 +365,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 				<!-- ########################################################## -->
 				<section>
 				<h2> Branching process model </h2>
-				<p class = "fragment"> Start with simpler case: exponential growth with age structure  </p>
+				<p class = "fragment"> <strong> Start with simpler question: </strong> How does generation time distribution affect long-term growth rate of exponentially growing population?  </p>
 				<div class = "fragment">	<p> Alfred Lotka (1934), Bellman and Harris (1948) and Powell (1956): Each cell's generation time is drawn <b>independently</b> from a distribution $f(\tau)$.</p>	</div>
 
 				<div class = "fragment">
@@ -438,15 +438,20 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 
 
+				<!-- ########################################################## -->
+				<section>
+				<h2> Branching process model </h2>
+				<h4> What about a finite population? </h4>
+					<p class = "fragment">In this case we can't use the self-similarity trick, but if population is large, we can course grain: genotype $i$ grows at rate $\rho_i$: (Levien, Kondev and Amir)
+					\[\frac{d}{dt}\phi  = s\phi(1-\phi)\] </p>
+					<h4 class = "fragment">Same question as before: how do we add noise to this? </h4>
+					<div class = "r-stack">
+					<p class = "fragment current-visible">In this case cells do not divide at a constant rate, therefore the stochastic events which change $\phi$ will depend not just on the number of mutant cells, but also their phenotypes.  </p>
 
+				<p class = "fragment current-visible"> If $f(\tau|\lambda,s_b)$ is the distribution of single-cell generation times conditioned on the growth rate and cell-size, the per unit time probability for the cell to divide is	\[
+				\gamma_i(a,\lambda,s_b) = \frac{\int \int\, d\lambda\, ds_b\,  f_i(a|\lambda,s_b)}{1- \int_0^a\int \int\, d\lambda\, ds_b\,da'\,  f_i(a'|\lambda,s_b)} \]
 
-
-
-					<!-- ########################################################## -->
-					<section>
-					<h2> Branching process in finite population </h2>
-					<p> How can we connect dynamics at the single-cell level to population level dynamics?  </p>
-				<p class="fragment">	\[
+				<p class="fragment current-visible">	We then get a nasty hyperbolic PDE for $Q$:\[
 			 \frac{d}{dt} Q({\bf u},{\bf a},{\boldsymbol \lambda},{\bf s},t) + \sum_{k=1}^N \frac{\partial}{\partial a_k} Q({\bf u},{\bf a},{\boldsymbol \lambda},{\bf s},t)
 			 = - Q({\bf u},{\bf a},{\boldsymbol \lambda},{\bf s},t)\left(D+ \sum_{k=1}^N \gamma_{u_k}(a_k,\lambda_k,s_{b,k})\right) \]
 			along with the boundary conditions
@@ -455,12 +460,12 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 			S_{k,s_{b,v}e^{\lambda a_v}/2}(S_{v,s_{b,v}e^{\lambda a_v}/2}({\bf s})),t)\\
 			\quad\quad= \frac{g(\lambda_k)g(\lambda_v)}{N}\int\int \gamma_{u_v}(a_v,\lambda_v,s_{b,v})
 			\times Q({\bf u},{\bf a},S_{v,\lambda_v'}S_{k,\lambda_k'}(({\boldsymbol \lambda})),{\bf s},t)d\lambda_k'd\lambda_v'.\]</p>
-			<p class="fragment">In these equations, $g(\lambda)$ is the distribution of single-cell growth rates and $\gamma$ is the division rate:
-			\[
-		\gamma_i(a,\lambda,s_b) = \frac{\int \int\, d\lambda\, ds_b\,  f_i(a|\lambda,s_b)}{1- \int_0^a\int \int\, d\lambda\, ds_b\,da'\,  f_i(a'|\lambda,s_b)}
-	\] </p>
+
+			</div>
 
 				</section>
+
+
 
 						<!-- ########################################################## -->
 						<section>
@@ -468,19 +473,13 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 						 <p> We don't really care about $Q$ though! we are interested in the behavoir of the mutant fraction $\phi$. </p>
 						<h4 class="fragment"> Question: can we coarse-grain to get an effective SDE?  If so, what are the parameters? </h4>
 
-						<p class="fragment"> Let's start by assuming a large mutant fraction with long-term growth rate $\Lambda_m$ competing with resident population with growth rate $\Lambda_r=1$. </p>
-
-								<p class="fragment"> When $\phi$ is not "too small", we can approximate
-						\[
-						\frac{d}{dt}\phi = \frac{1}{N}\frac{d}{dt}m - \frac{\phi}{N}\frac{d}{dt}N = \Lambda_m \phi - \phi(\Lambda_m\phi +\Lambda_r (1-\phi) ) = s\phi(1-\phi)
-					\] <p>
-
 						<p class="fragment">
-						We might guess that the corresponding SDE is something like
+						We might guess that (at least for large $N$) the corresponding SDE is something like
 						\[
-						\frac{d}{dt}\phi = s_{\rm eff}\phi(1-\phi) + \sqrt{\phi(1-\phi)/N_{\rm eff}}\xi
+						\frac{d}{dt}\phi = s\phi(1-\phi) + \sqrt{\frac{\phi(1-\phi)}{N_{\rm eff}}}\xi
 					\]
-					This would imply $p_{\rm fix } \sim s\frac{N_{\rm eff}}{N}$
+					All the classical results about fixation and neutral drift then follow.
+					In particular, this will $p_{\rm fix } \sim s\frac{N_{\rm eff}}{N}$.
 					 </p>
 
 
@@ -501,43 +500,82 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 					<!-- ########################################################## -->
 					<section>
-					<h2>Neutral dynamics </h2>
-					<p> Recall that in the case where division times are expentially distributed, this is the classical Moran model </p>
-					<p class = "fragment">
+					<h2>Results: Neutral dynamics </h2>
+
+
+					<p> Let's start by considering the neutral case ($s=0$). In the classical Moran model, we expect that
 					\[
 					{\rm var}(\phi) \approx \frac{t}{N}
-				\] </p>
+				\]
+					</p>
 
-				<p> What about the case when generation times are perfectly deterministic? </p>
+						<img class = "fragment" src="./figures/drif_ratio.png" height = 300>
 
-				<p> This would suggest that $N_{\rm eff}  = 4/3\ln(2)N$ and therefore $p_{\rm fix} \sim </p>
+				<p class = "fragment"> Ratio is $O(N)$! Even in large populations the time dependence of division rates matters. What's going on? </p>
+
 					</section>
 
 					<!-- ########################################################## -->
 					<section>
-					<h2>The coalescent </h2>
-					<p> We can understand the different with coelecent theory </p>
+					<h2>Results: Neutral dynamics </h2>
+					<p> We can get some idea by looking at the limiting case ${\rm CV} \approx 0$. </p>
+
+					<p class = "fragment"> To get from the currect cells in the population, we have to go back $O(N)$ generations. </p>
+
+						<img class = "fragment" src="./figures/oscil.png" height = 300>
 					</section>
 
 					<!-- ########################################################## -->
 					<section>
-					<h2>Fixation probability </h2>
-					<p> We can show
+					<h2>Results: benificial mutations </h2>
+					<p> Now let's consider the fate of a benificial mutation occuring in one cell. Can we use the argument from before but with the drift barrier at $N_{\rm eff} = 2\rho/3\ln(2)N$? Actually not! It's not just about the drift barrier, but the out-of-steady-state dynamics of the initial mutant clone.  </p>
+					<div class = "r-stack">
+					<p class = "fragment current-visible"> Let $p_{\rm ext}$ be the exitinctin probability and $q$ be the chance that a cell is expelled before it divides. Then
 					\[
-			p_{\rm fix} =  \frac{2}{{\rm CV}_{\tau}^2}\left(1-2^{-{\rm CV}_{\tau}^2} \right)s + O(s^2).\]</p>
+					p_{\rm ext} = q +(1-q)p_{\rm ext} ^2.
+				\]
+					where
+					\[q = \rho_r\int_0^{\infty}\int_0^{\tau_d}f_m(\tau_d)e^{-\rho_r \tau_e}d\tau_e d\tau_d = 1 - \tilde{f}_m(\rho_r)\]
+					$\tilde{f}_m(\rho_r) = \int_0^{\infty}f_m(\tau)e^{-\rho_r\tau}d\tau$ is the Laplace transform of $f_m$ evaluated at $\rho_r$.
+				</p>
+
+					<img class = "fragment" src="./figures/el_vs_pfix.png" height = 300>
+				</div>
 
 
 					</section>
 
+
 					<!-- ########################################################## -->
 					<section>
-					<h2>Fixation probability </h2>
+					<h2>Results: benificial mutations </h2>
+					<p> <strong>Example </strong>: Let's assume the distribution of generation times is a gamma distribution. </p>
+					<div class = "r-stack">
+					<p class = "fragment current-visible"> We can show that
+						\[
+				p_{\rm fix} =  \frac{2}{{\rm CV}_{\tau}^2}\left(1-2^{-{\rm CV}_{\tau}^2} \right)s + O(s^2).\]</p>
+
+					<img class = "fragment" src="./figures/pfix_sims.png" height = 300></div>
+					<div class = "fragment">
 					<p>Notice that as ${\rm CV}\to 0$, we obtain $p_{\rm fix} 2\ln(2)s \ne N/N_{\rm eff}s$. </p>
 
-					<h4>We cannot capature the dynamics by rescaling Moran SDE -- connection between genetic drift and fixation breaks down. </h4>
+					<h4>We cannot capature the dynamics by rescaling Moran SDE -- connection between genetic drift and fixation breaks down. </h4></div>
+				</section>
+
+				<!-- ########################################################## -->
+				<section>
+				<h2>Results: long-term evolution </h2>
+				<h4>Do small effects on fixation probability matter in the long-term? </h4>
+
+				<p class = "fragment">  The average of $\rho$ over many trajectories obeys
+					\[  \frac{d}{dt}\langle \rho \rangle= \mu N \rho \delta \langle \rho p_{\rm fix} \rangle.
+				\]</p>
+
+					<img class = "fragment" src="./figures/evo_traj.png" height = 300>
+
+			</section>
 
 
-					</section>
 </section>
 
 <!-- ########################################################## -->
