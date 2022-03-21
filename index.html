@@ -133,7 +133,7 @@
 
 <!-- ########################################################## -->
 				<section>
-				<h2> The Moran process </h2>
+				<h2> Evolution in the Moran model </h2>
 				<p>These equations work well when $\phi$ is not too small, but new mutations emerge in single-cells, so $\phi(0) = 1/N$.</p>
 
 				<h4 class = "fragment">Model must include fluctuations $\color{rgb(20, 116, 111)}{\implies}$ demands we make assumptions about single-cell dynamics </h4>
@@ -146,14 +146,14 @@
 
 				<!-- ########################################################## -->
 				<section>
-				<h2> The Moran process </h2>
+				<h2> Evolution in the Moran model </h2>
 					<img src="./figures/lineages2.svg" height="400">
 				</section>
 
 <!-- ########################################################## -->
 				<section>
-					<h2> The Moran process </h2>
-					<p class = "fragment" data-fragment-index="1"> This means that over a small time interval $\Delta t$, the number of mutants gained and lost is
+					<h2> Evolution in the Moran model </h2>
+					<p class = "fragment" data-fragment-index="1"> This means that over a small time interval $\Delta t$, the number of mutants gained and lost are both given by Poisson distributions:
 					\[\begin{aligned}\text{# of mutants gained} &\sim {\rm Poission}(N\rho_1\phi(1-\phi) \Delta t)\\
 					\text{# of mutants lost} &\sim {\rm Poission}(N\rho_2\phi(1-\phi) \Delta t)
 					\end{aligned}\]</p>
@@ -195,7 +195,7 @@
 
 			<!-- ########################################################## -->
 			<section>
-			<h2> Properties of the Moran model </h2>
+			<h2> Evolution in the Moran model </h2>
 
 			<div class="r-stack">
 			<p class="fragment current-visible" data-fragment-index="1" > We know it must be when $\phi$ is small, so we make the approximation
@@ -215,8 +215,8 @@
 				We can use this to calculate the mean and variance
 				\[
 				\begin{aligned}
-				\langle \phi \rangle &= \phi(0)e^{st}\\
-				{\rm var}(\phi ) &= \phi(0)e^{st}(1-e)\\
+				\langle \phi \rangle &=  \phi(0)e^{st}\\
+					\langle \phi^2 \rangle &= \left[\phi (0) e^{s t} \left(e^{s t} (N s \phi (0)+1)-1\right) \right]/(N s)\\
 					\end{aligned}
 				\]
 				 </p>
@@ -235,7 +235,7 @@
 
 
 			<!-- ########################################################## -->
-			<section>
+			<!-- <section>
 			<h2> Properties of the Moran model </h2>
 
 					<div class="r-stack">
@@ -243,7 +243,8 @@
 					<img class="fragment" src="./figures/moran_fix2.svg" data-fragment-index="3" >
 				</div>
 					<div class="r-stack">
-					<div class="fragment current-visible" data-fragment-index="2" > <p> <strong> Fluctuations dominate: </strong> This means $\langle \phi \rangle= 0$ and $\sqrt{\langle  \phi^2\rangle} \approx t/N\phi_0$. </p>
+					<div class="fragment current-visible" data-fragment-index="2" > <p> <strong> Fluctuations dominate: </strong> In this regime, $\langle \phi \rangle= 1/N$, but conditioned on the mutant lineage being alive at time $t$, we $\phi$ will be on the order of $t/N$.
+					</p>
 						<p> But if $\phi=0$ mutant is extinct forever, so really we expect $\phi = O(t/N\phi_0)$ or $\phi$ is extinct. Each unit time the mutant is equally likely to go exitinct or grow, so the chance of surviving until time $t$ is $1/t$. </p>
 					</div>
 
@@ -251,53 +252,75 @@
 						<p> <strong> Fxiation probability: </strong> The analysis tells us the chance to reach the drift barrier is $1/s$ </p>
 					</div>
 				</div>
-		</section>
+		</section> -->
 
 
 
 		<!-- ########################################################## -->
-		<!-- <section>
-		<h2> Properties of the Moran model </h2>
+		<section>
+		<h2> Evolution in the Moran model </h2>
 					<h4>So what is the chance the mutant lineage reaches the drift barrier before going extinct?</h4>
 
-				<div class="r-stack">
-		<p class="fragment current-visible">
-		Below the drift barrier, we can approximate the dynamics over a small time $dt$ by
+
+		<p class="fragment">
+		Below the drift barrier, we can approximate the dynamics over a small time $\delta$ by
 			\[
 			\Delta \phi = \phi(t+\delta)-\phi(t) = \sqrt{\frac{\delta\phi(t)}{N}}Z,\quad Z \sim {\rm Normal}(0,1)
 			\]
 			This will approximation will give us an order-of-magnitude estimate of $\Delta \phi$ before some time $\delta^*$ when  $\delta^* = \phi(t)N$.
 		</p>
 
-		<p class="fragment current-visible">
-		 At $\delta^*$, the mutant fraction will have changed by $\pm \phi(t)$.This means the population has roughly an equal chance of doubling or going extinct over a time period $\delta^*$. 	</p>
+		<p class="fragment">
+		 At $\delta_1$, the mutant fraction will have changed by $\pm \phi(t)$.This means the population has roughly an equal chance of doubling or going extinct over a time period $\delta_1$. 	</p>
 
-		 	<p class="fragment current-visible">
-				We can repeat this approximation iteratively. After $k$ iterations, we find that  the population size is
-			\[
-			\phi(t_k) = \left\{ \begin{array}{cl}
-			 2^k/N & \text{with prob. $1/2^k$}\\
-			  0 & \text{with prob. $1-1/2^k$}\end{array}\right.
-			\]
-			where
-			\[
-			t_k = t_{k-1} + \phi(t_{k-1})N = \sum_j 2^{j} \sim 2^k \implies k = \ln(t)/\ln(2)
-			\]
-		</p>
 
-		<p class="fragment current-visible">
-	Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the mutant size and chance of survival:
-		\[
-		\phi(t) = \left\{ \begin{array}{cl}
-		 t/N & \text{with prob. $1/t$}\\
-			0 & \text{with prob. $1-1/t$}\end{array}\right.
-		\]
-		So the population will reach a fraction $1/Ns = t/N$ after a time $t = 1/s$. The chance the survive until this time is $\sim s$.
-	</p>
+			<p class ="fragment">
+				After $\delta_1$ we can repeat the approximation and after $k$ iterations a time $t_k$ has elapsed where
+				\[
+				t_k = t_{k-1} + \phi(t_{k-1})N = \sum_j 2^{j} \sim 2^k \implies k = \ln(t)/\ln(2)
+				\]
+			</p>
 
-	</div>
 
-	</section> -->
+	</section>
+
+
+	<!-- ########################################################## -->
+	<section>
+	<h2>  Evolution in the Moran model </h2>
+				<h4>So what is the chance the mutant lineage reaches the drift barrier before going extinct?</h4>
+
+	<p>
+Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the mutant size and chance of survival:
+	\[
+	\phi(t) = \left\{ \begin{array}{cl}
+	 t/N & \text{with prob. $1/t$}\\
+		0 & \text{with prob. $1-1/t$}\end{array}\right.
+	\]
+	So the population will reach a fraction $1/Ns = t/N$ after a time $t = 1/s$. The chance the survive until this time is $\sim s$.
+</p>
+
+</section>
+
+
+<!-- ########################################################## -->
+<section>
+<h2> Evolution in the Moran model </h2>
+	<h4>How fast do mutations accumulate?</h4>
+	<p class = "fragment">In general, very complicated problem because we need to consider competition between >2 mutants and the theory above breaks down. </p>
+
+	<h4 class = "fragment"> When can we neglect competition between mutant lineages? </h4>
+
+	<p class = "fragment"> When time for established mutant to sweep through the  population is much less than time for new mutation to become established. Letting $\mu$ be the mutation rate:
+		\[\tau_{\rm sw} = 1/s\ln (Ns) \ll \tau_{\rm est} = 1/N\mu s \implies N\mu \ln Ns \ll 1 \]</p>
+
+		<p class = "fragment">In this regime, fixations a Poisson process with rate $1/\tau_{\rm est} = N\mu s$, implying
+		\[\rho \sim t N\mu s \] </p>
+
+
+</section>
+
+
 </section>
 
 <!-- ########################################################## -->
