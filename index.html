@@ -332,40 +332,50 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 <section>
 	<!-- ########################################################## -->
 		<section>
-			<h2> Part 2: Single-cell dynamics </h2>
+			<h2> Part 2: From single-cell to population scale </h2>
 
 			<img src="./figures/scales.png">
 
 
 			</section>
 
-		<!-- ########################################################## -->
-		<section>
-		<h2>Motivation from single-cell data</h2>
+					<!-- ########################################################## -->
+					<section>
+					<h2>Motivation from single-cell data</h2>
 
-						<iframe width="820" height="415"
-		src="https://www.youtube.com//embed/5PyoO4S3BU0">
-		</iframe>
-		<p>  Wang et al. Current Biology (2010) </p>
+					<div class = "r-stack">
+						<div class = "fragment current-visible">
+									<iframe width = 900 height="220"
+					src="https://www.youtube.com//embed/5PyoO4S3BU0">
+					</iframe>
+					<p>  Wang et al. Current Biology (2010) </p></div>
+					<img class = "fragment" src="./figures/mm_drawing.png" height="250">
+					</div>
+					<div class = "r-stack">
+					<p class = "fragment current-visible"> The basic picture of single-cell growth: cells accumulate mass exponentially at a (<strong>random</strong>) rate $\lambda$ between cell divisions, then divide in two after a (<strong>random</strong>) time $\tau$
+						\[s_{b,k} = \frac{1}{2}s_{b,k-1}e^{\lambda\tau} \implies \ln s_{b,k} = \lambda \tau -\ln(2) + \ln s_{b,k-1}\]
+						Generation time must be coupled to initial cell-size and growth rate in order to mantain a stable distribution of cell-sizes
+					</p>
+					<p class = "fragment current-visible"> This leads to a distribution $f(\tau)$ which characterizes the statistics of cell generation times in terms of the phenotypes $\lambda$ and $s$. The biochemical mechanism by which cell's regulate their cell-cycle progression and growth rates therefore affect the distribution of generation times. <strong>We need to understand how evolution shapes this distribution in order to explain the observed regulatory mechansims.  </strong>
+					</p>
+					</div>
+					</section>
 
-		</section>
+					<!-- ########################################################## -->
+					<!-- <section>
+						<h2>Model of single-cell growth</h2>
+						<p> There is a large body of liturature seeking to understand the dynamics of single-cell growth and division. Key observations:
+							<ul>
+								<li> In fast growing bacteria (e.g. E coli), cell's accumulate biomass exponentially </li>
+								<li> Cell-size is regulated (after a long time the population converges to a stable size distribution)</li>
+							</ul>
+					</section> -->
+
 
 				<!-- ########################################################## -->
 				<section>
-				<h2>Motivation from single-cell data</h2>
-
-				<p> A measure of an individual cells viability is its genertaion time. A cell with a shorter generation time will produce few offspring.  </p>
-				<img class = "fragment" src="./figures/mm_drawing.png">
-				<p class = "fragment"> Generation time is random, and correlated with many other traits. Natural to think about understanding adaptation in terms of $f(\tau)$ </p>
-				</section>
-
-
-
-
-				<!-- ########################################################## -->
-				<section>
-				<h2> Branching process model </h2>
-				<p class = "fragment"> <strong> Start with simpler question: </strong> How does generation time distribution affect long-term growth rate of exponentially growing population?  </p>
+				<h2> From single-cell to population scale </h2>
+				<p class = "fragment"> Before we connect single-cell dynamics to evolution, let's first connect to population growth. </p>
 				<div class = "fragment">	<p> Alfred Lotka (1934), Bellman and Harris (1948) and Powell (1956): Each cell's generation time is drawn <b>independently</b> from a distribution $f(\tau)$.</p>	</div>
 
 				<div class = "fragment">
@@ -440,26 +450,53 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 				<!-- ########################################################## -->
 				<section>
+					<h2> Generalized Euler-Lotka Formula  </h2>
+
+					<p>	The Euler-Lotka formula has an elagent generalization to the case where cell's generation times are correlated with their ancestors (Lebowitz et al., 1974):
+						<script type="math/tex; mode=display">
+							\frac{1}{2} = \int_0^{\infty} \color{rgb(20, 116, 111)}{f_{\rm tree}(\tau)}e^{-\Lambda \tau}d\tau = {\mathbb E}_{\rm tree}\left[e^{-\Lambda \tau}  \right].
+						</script>
+						where $\color{rgb(20, 116, 111)}{f_{\rm tree}(\tau)}$ is the distribution of generation times <b> taken over all cells </b> throughout the history of an exponentially growing population.
+					</p>
+
+									<div class="fragment">		<div class="tree_vs_lineage"></div>
+
+						<script type="module">
+						import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+						import define from "https://api.observablehq.com/@elevien/lineage-representation.js?v=3";
+						(new Runtime).module(define, name => {
+						if (name === "tree_vs_lineage") return Inspector.into(".tree_vs_lineage")();
+						});
+						</script>
+						<p> In general $\color{rgb(20, 116, 111)}{f_{\rm tree}(\tau)} \ne  \color{rgb(205, 88, 73)}{f(\tau)}$ </p></div>
+
+
+						</section>
+
+
+
+				<!-- ########################################################## -->
+				<section>
 				<h2> Branching process model </h2>
 				<h4> What about a finite population? </h4>
-					<p class = "fragment">In this case we can't use the self-similarity trick, but if population is large, we can course grain: genotype $i$ grows at rate $\rho_i$: (Levien, Kondev and Amir)
-					\[\frac{d}{dt}\phi  = s\phi(1-\phi)\] </p>
+					<p class = "fragment">In this case we can't use the self-similarity trick, but if population is large we expect
+					\[\frac{d}{dt}\phi  = (\rho_m-\rho_r)\phi(1-\phi)\quad\quad{\rm with}\quad\quad  \frac{1}{2} = \int_0^{\infty}f_i(\tau)d\tau, \quad i \in \{m,r\}\]</p>
+
 					<h4 class = "fragment">Same question as before: how do we add noise to this? </h4>
 					<div class = "r-stack">
-					<p class = "fragment current-visible">In this case cells do not divide at a constant rate, therefore the stochastic events which change $\phi$ will depend not just on the number of mutant cells, but also their phenotypes.  </p>
+					<p class = "fragment current-visible">We want to understand how the stochastic dynamics of birth and death at the single-cell level propogate to population level, but in this case cells do not divide at a constant rate, therefore the stochastic events which change $\phi$ will depend not just on the number of mutant cells, but also their phenotypes.  </p>
 
-				<p class = "fragment current-visible"> If $f(\tau|\lambda,s_b)$ is the distribution of single-cell generation times conditioned on the growth rate and cell-size, the per unit time probability for the cell to divide is	\[
-				\gamma_i(a,\lambda,s_b) = \frac{\int \int\, d\lambda\, ds_b\,  f_i(a|\lambda,s_b)}{1- \int_0^a\int \int\, d\lambda\, ds_b\,da'\,  f_i(a'|\lambda,s_b)} \]
+				<p class = "fragment current-visible"> If $f_i(\tau)$ is the distribution of single-cell generation times conditioned on the growth rate and cell-size, the per unit time probability for the cell to divide is	\[
+				\gamma_i(a) = \frac{f_i(a)}{1- \int_0^a\,da'\,  f_i(a')} \]
+				Note special case: $f_i = \rho_ie^{\rho_i\tau}\implies \gamma_i = \rho_i$.
+			</p>
 
-				<p class="fragment current-visible">	We then get a nasty hyperbolic PDE for $Q$:\[
-			 \frac{d}{dt} Q({\bf u},{\bf a},{\boldsymbol \lambda},{\bf s},t) + \sum_{k=1}^N \frac{\partial}{\partial a_k} Q({\bf u},{\bf a},{\boldsymbol \lambda},{\bf s},t)
-			 = - Q({\bf u},{\bf a},{\boldsymbol \lambda},{\bf s},t)\left(D+ \sum_{k=1}^N \gamma_{u_k}(a_k,\lambda_k,s_{b,k})\right) \]
+				<p class="fragment current-visible">	We then get a hyperbolic PDE for $Q$:\[
+			 \frac{d}{dt} Q({\bf u},{\bf a},t) + \sum_{k=1}^N \frac{\partial}{\partial a_k} Q({\bf u},{\bf a},t)
+			 = - Q({\bf u},{\bf a},t)\left(D+ \sum_{k=1}^N \gamma_{u_k}(a_k)\right) \]
 			along with the boundary conditions
 			 \[
-			Q(S_{k,u_v}({\bf u}),S_{k,0}(S_{v,0}({\bf a})),{\boldsymbol \lambda},
-			S_{k,s_{b,v}e^{\lambda a_v}/2}(S_{v,s_{b,v}e^{\lambda a_v}/2}({\bf s})),t)\\
-			\quad\quad= \frac{g(\lambda_k)g(\lambda_v)}{N}\int\int \gamma_{u_v}(a_v,\lambda_v,s_{b,v})
-			\times Q({\bf u},{\bf a},S_{v,\lambda_v'}S_{k,\lambda_k'}(({\boldsymbol \lambda})),{\bf s},t)d\lambda_k'd\lambda_v'.\]</p>
+			Q(S_{k,u_v}({\bf u}),S_{k,0}(S_{v,0}({\bf a})),t)= \frac{1}{N} \gamma_{u_v}(a_v)Q({\bf u},{\bf a},t)\]</p>
 
 			</div>
 
@@ -471,16 +508,23 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 						<section>
 						<h2> Bridging-scales </h2>
 						 <p> We don't really care about $Q$ though! we are interested in the behavoir of the mutant fraction $\phi$. </p>
-						<h4 class="fragment"> Question: can we coarse-grain to get an effective SDE?  If so, what are the parameters? </h4>
+						<h4 class="fragment"> Question: can we coarse-grain to get an effective SDE?</h4>
+
+						<p class = "fragment"> Just like before, we can try deriving an SDE:
+						<!-- \[\begin{aligned}\text{# of mutants gained} &\sim {\rm Poission}\left(N\left[\sum_{j:u_j=m}\gamma_j(a_j,\lambda_j,s_j) \right]\phi(1-\phi) \Delta t\right)\\
+						\text{# of mutants lost} &\sim {\rm Poission}\left(N\left[\sum_{j:u_j=r}\gamma_j(a_j,\lambda_j,s_j) \right]\phi(1-\phi) \Delta t\right)
+						\end{aligned}\]-->
+						\[\begin{aligned}\text{# of mutants gained} &\sim {\rm Poission}\left(N\langle\gamma_m(a_j) \rangle\phi(1-\phi) \Delta t\right)\\
+						\text{# of mutants lost} &\sim {\rm Poission}\left(N\langle\gamma_r(a_j) \rangle\phi(1-\phi) \Delta t\right)
+						\end{aligned}\]</p>
 
 						<p class="fragment">
-						We might guess that (at least for large $N$) the corresponding SDE is something like
+						We might guess that we can make the approximation $\langle\gamma_i(a_j,\lambda_j,s_j) \rangle \approx \rho_i$. This obviously isn't going to work when $N\phi$ is very small, but perhaps if the drift barrier $1/s$ is not too small we can capture the dynamics with the SDE:
 						\[
-						\frac{d}{dt}\phi = s\phi(1-\phi) + \sqrt{\frac{\phi(1-\phi)}{N_{\rm eff}}}\xi
+						\frac{d}{dt}\phi = (\rho_m-\rho_r)\phi(1-\phi) + \sqrt{(\rho_r + \rho_m)\frac{\phi(1-\phi)}{N}}\xi
 					\]
 					All the classical results about fixation and neutral drift then follow.
-					In particular, this will $p_{\rm fix } \sim s\frac{N_{\rm eff}}{N}$.
-					 </p>
+				</p>
 
 
 
@@ -672,33 +716,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 
 
-																	<!-- ########################################################## -->
-																	<section>
-																		<h2> Generalized Euler-Lotka Formula  </h2>
 
-																		<p>	The Euler-Lotka formula has an elagent generalization to the case where cell's generation times are correlated with their ancestors (Lebowitz et al., 1974):
-																			<script type="math/tex; mode=display">
-																				\frac{1}{2} = \int_0^{\infty} \color{rgb(20, 116, 111)}{f_{\rm tree}(\tau)}e^{-\Lambda \tau}d\tau = {\mathbb E}_{\rm tree}\left[e^{-\Lambda \tau}  \right].
-																			</script>
-																			where $\color{rgb(20, 116, 111)}{f_{\rm tree}(\tau)}$ is the distribution of generation times <b> taken over all cells </b> throughout the history of an exponentially growing population.
-																		</p>
-
-																<div class="fragment">		<div class="tree_vs_lineage"></div>
-
-						<script type="module">
-						import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-						import define from "https://api.observablehq.com/@elevien/lineage-representation.js?v=3";
-						(new Runtime).module(define, name => {
-						  if (name === "tree_vs_lineage") return Inspector.into(".tree_vs_lineage")();
-						});
-						</script>
-						<p> In general $\color{rgb(20, 116, 111)}{f_{\rm tree}(\tau)} \ne  \color{rgb(205, 88, 73)}{f(\tau)}$ </p></div>
-						<div class = "fragment">
-						<p> $\implies$ does not connect growth rate to lineage dynamics!</p>
-					</div>
-
-
-									</section>
 								</section>
 
 
