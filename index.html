@@ -352,11 +352,11 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 					<img class = "fragment" src="./figures/mm_drawing.png" height="250">
 					</div>
 					<div class = "r-stack">
-					<p class = "fragment current-visible"> The basic picture of single-cell growth: cells accumulate mass exponentially at a (<strong>random</strong>) rate $\lambda$ between cell divisions, then divide in two after a (<strong>random</strong>) time $\tau$
-						\[s_{b,k} = \frac{1}{2}s_{b,k-1}e^{\lambda\tau} \implies \ln s_{b,k} = \lambda \tau -\ln(2) + \ln s_{b,k-1}\]
+					<p class = "fragment current-visible"> The basic picture of single-cell growth: cells accumulate mass exponentially at a (<strong>random</strong>) rate $\rho$ between cell divisions, then divide in two after a (<strong>random</strong>) time $\tau$
+						\[s_{b,k} = \frac{1}{2}s_{b,k-1}e^{\rho\tau} \implies \ln s_{b,k} = \rho \tau -\ln(2) + \ln s_{b,k-1}\]
 						Generation time must be coupled to initial cell-size and growth rate in order to mantain a stable distribution of cell-sizes
 					</p>
-					<p class = "fragment current-visible"> This leads to a distribution $f(\tau)$ which characterizes the statistics of cell generation times in terms of the phenotypes $\lambda$ and $s$. The biochemical mechanism by which cell's regulate their cell-cycle progression and growth rates therefore affect the distribution of generation times. <strong>We need to understand how evolution shapes this distribution in order to explain the observed regulatory mechansims.  </strong>
+					<p class = "fragment current-visible"> This leads to a distribution $f(\tau)$ which characterizes the statistics of cell generation times in terms of the phenotypes $\rho$ and $s$. The biochemical mechanism by which cell's regulate their cell-cycle progression and growth rates therefore affect the distribution of generation times. <strong>We need to understand how evolution shapes this distribution in order to explain the observed regulatory mechansims.  </strong>
 					</p>
 					</div>
 					</section>
@@ -393,7 +393,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 
 				<div class = "fragment">
-				<p> In the long-term, ${\mathbb E}[N(t)] = Ae^{\Lambda t}$ for some $\Lambda$. </p>
+				<p> In the long-term, ${\mathbb E}[N(t)] = Ae^{\rho t}$ for some $\rho$. </p>
 				</div>
 				<div class = "fragment">
 				<h4> How does the rate at which the population grows depend on the distribution of generation times? </h4>
@@ -421,15 +421,15 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 
 				<div class="fragment">
-				<p>The root cell has two daughters with progenies that grow exponentially at the same rate $\Lambda$. </p></div>
+				<p>The root cell has two daughters with progenies that grow exponentially at the same rate $\rho$. </p></div>
 				<div class="fragment"><p> Let $\tau$ be the first cell's generation time:
 				<script type="math/tex; mode=display">
-				{\mathbb E}\left[N_{\rm daughter}|\tau\right] = Ae^{\Lambda(t-\tau)} \implies
-				{\mathbb E}\left[N_{\rm daughter}\right] = 	A \int_0^{\infty} e^{\Lambda(t-\tau)}f(\tau)d\tau
+				{\mathbb E}\left[N_{\rm daughter}|\tau\right] = Ae^{\rho(t-\tau)} \implies
+				{\mathbb E}\left[N_{\rm daughter}\right] = 	A \int_0^{\infty} e^{\rho(t-\tau)}f(\tau)d\tau
 				</script>
 				<!-- <script type="math/tex; mode=display">
-				N_{\rm daughter}(t|\tau)= Ae^{\Lambda(t-\tau)} \implies
-				{\mathbb E}_f\left[N_{\rm daughter}(t|\tau)\right] = 	A \int_0^{\infty} e^{\Lambda(t-\tau)}f(\tau)d\tau
+				N_{\rm daughter}(t|\tau)= Ae^{\rho(t-\tau)} \implies
+				{\mathbb E}_f\left[N_{\rm daughter}(t|\tau)\right] = 	A \int_0^{\infty} e^{\rho(t-\tau)}f(\tau)d\tau
 				</script> -->
 				</p>
 				<div>
@@ -437,7 +437,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 				<div class="fragment">
 				<p> Writing the population size at time $t$ in terms of the size of both daughter progenies gives the so-called Euler-Lotka Formula
 					<script type="math/tex; mode=display">
-				Ae^{\Lambda t} = 	\color{rgb(20, 116, 111)}{{\mathbb E}\left[N_{\text{left daughter}}\right]} + \color{rgb(205, 88, 73)}	{{\mathbb E}\left[N_{\text{right daughter}}\right]}  = 2 A \int_0^{\infty} e^{\Lambda(t-\tau)}f(\tau)d\tau \implies \color{rgb(5, 5, 5)}{	\frac{1}{2} = \int_0^{\infty}f(\tau)e^{-\Lambda \tau}d\tau}
+				Ae^{\rho t} = 	\color{rgb(20, 116, 111)}{{\mathbb E}\left[N_{\text{left daughter}}\right]} + \color{rgb(205, 88, 73)}	{{\mathbb E}\left[N_{\text{right daughter}}\right]}  = 2 A \int_0^{\infty} e^{\rho(t-\tau)}f(\tau)d\tau \implies \color{rgb(5, 5, 5)}{	\frac{1}{2} = \int_0^{\infty}f(\tau)e^{-\rho \tau}d\tau}
 					</script>
 				</p></div>
 
@@ -454,7 +454,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 					<p>	The Euler-Lotka formula has an elagent generalization to the case where cell's generation times are correlated with their ancestors (Lebowitz et al., 1974):
 						<script type="math/tex; mode=display">
-							\frac{1}{2} = \int_0^{\infty} \color{rgb(20, 116, 111)}{f_{\rm tree}(\tau)}e^{-\Lambda \tau}d\tau = {\mathbb E}_{\rm tree}\left[e^{-\Lambda \tau}  \right].
+							\frac{1}{2} = \int_0^{\infty} \color{rgb(20, 116, 111)}{f_{\rm tree}(\tau)}e^{-\rho \tau}d\tau = {\mathbb E}_{\rm tree}\left[e^{-\rho \tau}  \right].
 						</script>
 						where $\color{rgb(20, 116, 111)}{f_{\rm tree}(\tau)}$ is the distribution of generation times <b> taken over all cells </b> throughout the history of an exponentially growing population.
 					</p>
@@ -511,15 +511,15 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 						<h4 class="fragment"> Question: can we coarse-grain to get an effective SDE?</h4>
 
 						<p class = "fragment"> Just like before, we can try deriving an SDE:
-						<!-- \[\begin{aligned}\text{# of mutants gained} &\sim {\rm Poission}\left(N\left[\sum_{j:u_j=m}\gamma_j(a_j,\lambda_j,s_j) \right]\phi(1-\phi) \Delta t\right)\\
-						\text{# of mutants lost} &\sim {\rm Poission}\left(N\left[\sum_{j:u_j=r}\gamma_j(a_j,\lambda_j,s_j) \right]\phi(1-\phi) \Delta t\right)
+						<!-- \[\begin{aligned}\text{# of mutants gained} &\sim {\rm Poission}\left(N\left[\sum_{j:u_j=m}\gamma_j(a_j,\rho_j,s_j) \right]\phi(1-\phi) \Delta t\right)\\
+						\text{# of mutants lost} &\sim {\rm Poission}\left(N\left[\sum_{j:u_j=r}\gamma_j(a_j,\rho_j,s_j) \right]\phi(1-\phi) \Delta t\right)
 						\end{aligned}\]-->
 						\[\begin{aligned}\text{# of mutants gained} &\sim {\rm Poission}\left(N\langle\gamma_m(a_j) \rangle\phi(1-\phi) \Delta t\right)\\
 						\text{# of mutants lost} &\sim {\rm Poission}\left(N\langle\gamma_r(a_j) \rangle\phi(1-\phi) \Delta t\right)
 						\end{aligned}\]</p>
 
 						<p class="fragment">
-						We might guess that we can make the approximation $\langle\gamma_i(a_j,\lambda_j,s_j) \rangle \approx \rho_i$. This obviously isn't going to work when $N\phi$ is very small, but perhaps if the drift barrier $1/s$ is not too small we can capture the dynamics with the SDE:
+						We might guess that we can make the approximation $\langle\gamma_i(a_j,\rho_j,s_j) \rangle \approx \rho_i$. This obviously isn't going to work when $N\phi$ is very small, but perhaps if the drift barrier $1/s$ is not too small we can capture the dynamics with the SDE:
 						\[
 						\frac{d}{dt}\phi = (\rho_m-\rho_r)\phi(1-\phi) + \sqrt{(\rho_r + \rho_m)\frac{\phi(1-\phi)}{N}}\xi
 					\]
@@ -637,7 +637,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 						<h2> The Euler-Lotka equation </h2>
 						<p>	We have derived the <b>the Euler-Lotka equation.</b>
 							<script type="math/tex; mode=display">
-								\frac{1}{2} = \int_0^{\infty}f(\tau)e^{-\Lambda \tau}d\tau = {\mathbb E}_f\left[e^{-\Lambda \tau}  \right].
+								\frac{1}{2} = \int_0^{\infty}f(\tau)e^{-\rho \tau}d\tau = {\mathbb E}_f\left[e^{-\rho \tau}  \right].
 							</script>
 						</p>
 
@@ -645,15 +645,15 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 						<p> If all cells live for exactly a time $\tau$, then $N(t) = 2^{t/\tau}$, so the rate of exponential growth is
 							<script type="math/tex; mode=display">
-						\Lambda = \ln(2)/\tau
+						\rho = \ln(2)/\tau
 							</script></p></div>
 
 						<div class="fragment">
 						<p>
 							<b>Jensen's inequality</b> tells us
 							<script type="math/tex; mode=display">
-							\frac{1}{2} = {\mathbb E}_f\left[e^{-\Lambda \tau}  \right] \ge e^{-\Lambda {\mathbb E}_f[\tau]}
-							 \implies \Lambda \ge  \ln(2)/{\mathbb E}_f[\tau]
+							\frac{1}{2} = {\mathbb E}_f\left[e^{-\rho \tau}  \right] \ge e^{-\rho {\mathbb E}_f[\tau]}
+							 \implies \rho \ge  \ln(2)/{\mathbb E}_f[\tau]
 							</script>
 						</p>
 						</div>
@@ -668,13 +668,13 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 						<ul>
 							<li> All cells live for exactly a time $\tau_0$. Then we have
 								<script type="math/tex; mode=display">
-									\frac{1}{2} = e^{-\Lambda \tau_0} \implies \Lambda = \frac{\ln(2)}{\tau_0}
+									\frac{1}{2} = e^{-\rho \tau_0} \implies \rho = \frac{\ln(2)}{\tau_0}
 								</script>
 							 </li>
 
 							 <li> Cells have a constant probability $1/\tau_0$ of dividing per unit time. Then
 								 <script type="math/tex; mode=display">
-									 \frac{1}{2} = \int_0^{\infty}e^{-\tau/\tau_0-\Lambda \tau}d\tau \implies \Lambda =\frac{1}{\tau_0}
+									 \frac{1}{2} = \int_0^{\infty}e^{-\tau/\tau_0-\rho \tau}d\tau \implies \rho =\frac{1}{\tau_0}
 								 </script>
 							 </li>
 						</ul></p>
