@@ -58,6 +58,7 @@
 
 					 	<img src="./figures/lineages1.svg">
 					<h3>Ethan Levien</h3>
+					<p>Joint work with Farshid Jafarpour (Utrecht University) and Ariel Amir (Harvard) </p>
 
 				</section>
 
@@ -140,7 +141,7 @@
 
 				<div class="r-stack">
 				<div class = "fragment current-visible">
-				<p > <strong> Standard approach (Moran process): </strong> <p>
+				<p > <strong> Standard approach is Moran process (see Fisher 2007): </strong> <p>
 					<p> <ul> <li>Take cell division to be a Poission process; that is, time between cell divisions is exponentially distributed at a rate detemined by the genotypes growth rate: \[ p_i(\tau) = \rho_ie^{-\rho_i\tau}
 				\]  </li>
 				<li> Every time a cell divides another cell is expelled from the culture in order to keep $N$ fixed. </li>
@@ -154,27 +155,27 @@
 				<section>
 					<h2> Evolution in the Moran model </h2>
 					<p class = "fragment" data-fragment-index="1"> This means that over a small time interval $\Delta t$, the number of mutants gained and lost are both given by Poisson distributions:
-					\[\begin{aligned}\text{# of mutants gained} &\sim {\rm Poission}(N\rho_1\phi(1-\phi) \Delta t)\\
-					\text{# of mutants lost} &\sim {\rm Poission}(N\rho_2\phi(1-\phi) \Delta t)
+					\[\begin{aligned}\text{# of mutants gained} &\sim {\rm Poission}(N\rho_m\phi(1-\phi) \Delta t)\\
+					\text{# of mutants lost} &\sim {\rm Poission}(N\rho_r\phi(1-\phi) \Delta t)
 					\end{aligned}\]</p>
 
 					<div class="r-stack">
 					<p class="fragment current-visible" data-fragment-index="3"> We can calculate the mean and variance of $\Delta \phi$:
-						\[\begin{aligned}\langle  \Delta \phi \rangle &= (\rho_1 - \rho_2)\phi(1-\phi)\Delta t\\
-						{\rm var} \left(\Delta \phi \right) &= \frac{(\rho_1 + \rho_2)}{N}\phi(1-\phi)\Delta t
+						\[\begin{aligned}\langle  \Delta \phi \rangle &= (\rho_m - \rho_r)\phi(1-\phi)\Delta t\\
+						{\rm var} \left(\Delta \phi \right) &= \frac{(\rho_m + \rho_r)}{N}\phi(1-\phi)\Delta t
 					\end{aligned}\]
-				For simplicty we set $\rho_r = 1$ and $\rho_1 = 1+s$</p>
+			</p>
 				<p class="fragment" data-fragment-index="4">
 					Corresponds to SDE
 					\[
-					\frac{d}{dt}\phi = \underbrace{s\phi(1-\phi)}_{\text{selection}} + \underbrace{\sqrt{\frac{\phi(1-\phi)}{N}}\xi}_{\text{drift}}
+					\frac{d}{dt}\phi = \underbrace{(\rho_m-\rho_r)\phi(1-\phi)}_{\text{selection}} + \underbrace{\sqrt{(\rho_m + \rho_r)\frac{\phi(1-\phi)}{N}}\xi}_{\text{drift}}
 					\]
 				</p></div>
 
 				<p class="fragment" data-fragment-index="4">
 					or the Fokker-Plank equation
 					\[
-					\frac{\partial}{\partial}p(\phi,t) = -\frac{\partial}{\partial \phi}[s\phi(1-\phi)p(\phi,t)] + \frac{\partial^2}{\partial \phi^2}\left[\frac{\phi(1-\phi)}{N}p(\phi,t) \right]
+					\frac{\partial}{\partial}p(\phi,t) = -\frac{\partial}{\partial \phi}[(\rho_m - \rho_r)\phi(1-\phi)p(\phi,t)] + \frac{\partial^2}{\partial \phi^2}\left[\frac{(\rho_m + \rho_r)\phi(1-\phi)}{N}p(\phi,t) \right]
 					\]
 				</p>
 
@@ -186,9 +187,9 @@
 						<p> Some trajectories starting on $\phi(0) = 1/N$  </p>
 						<div class="r-stack">
 						<img class="fragment" src="./figures/moran_fix1.svg" data-fragment-index="1">
-						<img class="fragment" src="./figures/moran_fix2.svg" data-fragment-index="3" >
 					</div>
-						<p class="fragment" data-fragment-index="2" > The behavoir spends stronly on whether selection or drifts dominates. When does the transition occur? </p>
+						<p class="fragment" data-fragment-index="2" > The behavoir depends stronly on whether selection or drifts dominates. When does the transition occur? </p>
+						<h4 class="fragment" data-fragment-index="4" > When does the transition occur? </h4>
 
 			</section>
 
@@ -200,13 +201,13 @@
 			<div class="r-stack">
 			<p class="fragment current-visible" data-fragment-index="1" > We know it must be when $\phi$ is small, so we make the approximation
 				\[
-		 \frac{d\phi}{dt} =s\phi(1-\phi) + \sqrt{\frac{\phi(1-\phi)}{N}} \approx s\phi + \sqrt{\phi/N}\xi
+		 \frac{d\phi}{dt} =\delta \rho\phi(1-\phi) + \sqrt{2\rho_r\frac{\phi(1-\phi)}{N}} \approx \delta \rho \phi + \sqrt{2\rho\phi/N}\xi
 						\]
 			 </p>
 
 			 <p class="fragment" data-fragment-index="2" > Implies the PDE
 				 \[
-				\frac{\partial}{\partial}p(\phi,t) = -\frac{\partial}{\partial \phi}[s\phi p(\phi,t)] + \frac{\partial^2}{\partial \phi^2}\left[\frac{\phi}{N}p(\phi,t) \right]
+				\frac{\partial}{\partial}p(\phi,t) = -\frac{\partial}{\partial \phi}[\delta \rho\phi p(\phi,t)] + \frac{\partial^2}{\partial \phi^2}\left[2\rho\frac{\phi}{N}p(\phi,t) \right]
 				\]
 			</p></div>
 
@@ -215,8 +216,8 @@
 				We can use this to calculate the mean and variance
 				\[
 				\begin{aligned}
-				\langle \phi \rangle &=  \phi(0)e^{st}\\
-					\langle \phi^2 \rangle &= \left[\phi (0) e^{s t} \left(e^{s t} (N s \phi (0)+1)-1\right) \right]/(N s)\\
+				\langle \phi \rangle &=  \phi(0)e^{\delta\rho t}\\
+					\langle \phi^2 \rangle &= \left[\phi (0) e^{\delta \rho t} \left(e^{\delta \rho t} (N \delta \rho \phi (0)+1)-1\right) \right]/(N \delta rho)\\
 					\end{aligned}
 				\]
 				 </p>
@@ -224,12 +225,12 @@
 		 <p class = "fragment" data-fragment-index = "3">
 			The coefficient of variation
 			 \[
-		    CV = \frac{{\rm std}(\phi)}{\langle \phi\rangle} =\frac{1-e^{-st}}{Ns\phi_0} \to \frac{1}{Ns \phi_0}
+		    CV = \frac{{\rm std}(\phi)}{\langle \phi\rangle} =\frac{1-e^{-st}}{Ns\phi_0} \to \frac{2\rho}{N\delta \rho \phi_0}
 		  			\]
 				</p>
 
 				<p class = "fragment" data-fragment-index = "4">
-				 $1/Ns$ is called the <strong> Drift barrier </strong>
+				 Set $s = \delta \rho/\rho_r$. Then $1/Ns$ is called the <strong> Drift barrier </strong>
 					 </p>
 			</section>
 
@@ -263,15 +264,15 @@
 
 
 		<p class="fragment">
-		Below the drift barrier, we can approximate the dynamics over a small time $\delta$ by
+		Below the drift barrier, we can approximate the dynamics over a time $\Delta$ by
 			\[
-			\Delta \phi = \phi(t+\delta)-\phi(t) = \sqrt{\frac{\delta\phi(t)}{N}}Z,\quad Z \sim {\rm Normal}(0,1)
+			\Delta \phi = \phi(t+\delta)-\phi(t) = \sqrt{\frac{2\rho \Delta\phi(t)}{N}}Z,\quad Z \sim {\rm Normal}(0,1)
 			\]
-			This will approximation will give us an order-of-magnitude estimate of $\Delta \phi$ before some time $\delta^*$ when  $\delta^* = \phi(t)N$.
+			This will approximation will give us an order-of-magnitude estimate of $\Delta \phi$ before some time $\Delta^*$ when  $\Delta^* = \phi(t)N$.
 		</p>
 
 		<p class="fragment">
-		 At $\delta_1$, the mutant fraction will have changed by $\pm \phi(t)$.This means the population has roughly an equal chance of doubling or going extinct over a time period $\delta_1$. 	</p>
+		 At $\Delta_1$, the mutant fraction will have changed by $\pm \phi(t)$.This means the population has roughly an equal chance of doubling or going extinct over a time period $\Delta_1$. 	</p>
 
 
 			<p class ="fragment">
@@ -290,14 +291,15 @@
 	<h2>  Evolution in the Moran model </h2>
 				<h4>So what is the chance the mutant lineage reaches the drift barrier before going extinct?</h4>
 
-	<p>
+	<p class = "fragment">
 Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the mutant size and chance of survival:
 	\[
 	\phi(t) = \left\{ \begin{array}{cl}
-	 t/N & \text{with prob. $1/t$}\\
-		0 & \text{with prob. $1-1/t$}\end{array}\right.
-	\]
-	So the population will reach a fraction $1/Ns = t/N$ after a time $t = 1/s$. The chance the survive until this time is $\sim s$.
+	 t/N & \text{with prob. $1/t\rho_r$}\\
+		0 & \text{with prob. $1-1/t\rho_r$}\end{array}\right.
+	\]</p>
+	<p class = "fragment">
+	So the population will reach a fraction $1/Ns = \rho_rt/N$ after a time $\rho_rt = 1/s$. The chance the survive until this time is $p_{\rm fix}\sim s$.
 </p>
 
 </section>
@@ -312,10 +314,11 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 	<h4 class = "fragment"> When can we neglect competition between mutant lineages? </h4>
 
 	<p class = "fragment"> When time for established mutant to sweep through the  population is much less than time for new mutation to become established. Letting $\mu$ be the mutation rate:
-		\[\tau_{\rm sw} = 1/s\ln (Ns) \ll \tau_{\rm est} = 1/N\mu s \implies N\mu \ln Ns \ll 1 \]</p>
+		\[\tau_{\rm sw} = 1/\delta \rho\ln (Ns) \ll \tau_{\rm est} = 1/N\mu \rho_r s \implies N\mu \ln Ns \ll 1 \]</p>
 
-		<p class = "fragment">In this regime, fixations a Poisson process with rate $1/\tau_{\rm est} = N\mu s$, implying
-		\[\rho \sim t N\mu s \] </p>
+		<p class = "fragment">In this regime, fixations a Poisson process with rate $1/\tau_{\rm est} = N\mu s$. </p>
+			<p class = "fragment"> Simple case where all mutation increase fitness by $\delta \rho$:
+		\[ \frac{d}{dt}\langle\rho \rangle = \frac{\delta \rho}{\tau_{\rm est}} = N\mu (\delta \rho)^2\implies \langle \rho(t) \rangle \sim N\mu (\delta \rho)^2\] </p>
 
 
 </section>
@@ -409,7 +412,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 				<!-- ########################################################## -->
 				<section>
-				<h2> Branching process model </h2>
+				<h2> The Euler-Lotka Equation </h2>
 
 				<div class="recursive_tree"></div>
 				<script type="module">
@@ -424,8 +427,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 				<p>The root cell has two daughters with progenies that grow exponentially at the same rate $\rho$. </p></div>
 
 
-				<div class = "r-stack">
-				<div class="fragment current-visible"><p> Let $\tau$ be the first cell's generation time:
+				<div class="fragment"><p> Let $\tau$ be the first cell's generation time:
 				<script type="math/tex; mode=display">
 				{\mathbb E}\left[N_{\rm daughter}|\tau\right] = Ae^{\rho(t-\tau)} \implies
 				{\mathbb E}\left[N_{\rm daughter}\right] = 	A \int_0^{\infty} e^{\rho(t-\tau)}f(\tau)d\tau
@@ -440,26 +442,33 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 					</script>
 				</p>
 			</div>
-			</div>
-
-			<p class = "fragment"> Example, assume generation time distribution is a Gamma distribution
-			\[
-			\rho =
-				\]
-				Noise in generation times increases $\rho$!
-			</p>
-
-			<p class = "fragment"> Note that when ${\rm CV} = 1$ we get $\rho = 1/\mu$. 
-			</p>
-
-
-
 
 				</section>
 
 
+				<!-- ########################################################## -->
+				<section>
+					<h2> The Euler-Lotka Equation </h2>
+					<p class = "fragment"> Example: assume generation time distribution is a Gamma distribution characterized by a mean, $\bar{\tau}$ and coefficient of variation, ${\rm CV}$:
+					\[
+				f(\tau) = \frac{1}{\Gamma(k)}\tau^{k-1}e^{-\tau/\theta}
+						\]
+						where $\theta = \langle\tau \rangle {\rm CV}^2$ and $k = 1/{\rm CV}^2$.
+					</p>
+					<div class = "r-stack">
+						<img class = "fragment current-visible" src="./figures/gamma_dist.svg" height="200">
+						<p class = "fragment">Plugging into the Euler-Lotka Formula reveals
+						\[\rho = \frac{2^{-{\rm CV}^2}-1}{{\rm CV}^2\tau}\]</p>
+					</div>
 
-
+					<div  class = "fragment">
+					<p>
+						Note that $\rho$ increases with ${\rm CV}^2$. Two important cases:
+						<ul>
+							<li> $CV \to 0$, $\rho \to \ln(2)/\langle\tau \rangle$ </li>
+							<li> $CV =1$, $\rho = 1/\langle \tau \rangle$ </li>
+						</ul><p></div>
+				</section>
 
 				<!-- ########################################################## -->
 				<section>
@@ -490,7 +499,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 				<!-- ########################################################## -->
 				<section>
-				<h2> Branching process model </h2>
+				<h2> Bridging-scales </h2>
 				<h4> What about a finite population? </h4>
 					<p class = "fragment">In this case we can't use the self-similarity trick, but if population is large we expect
 					\[\frac{d}{dt}\phi  = (\rho_m-\rho_r)\phi(1-\phi)\quad\quad{\rm with}\quad\quad  \frac{1}{2} = \int_0^{\infty}f_i(\tau)d\tau, \quad i \in \{m,r\}\]</p>
@@ -539,12 +548,12 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 					All the classical results about fixation and neutral drift then follow.
 				</p>
 
+				<p class ="fragment">This approach assumes that the age distribution can be treated as in steady-state (approach was used in  Shpak1 (2007))</p>
+
 
 
 			</section>
-
-							</section>
-
+		</section>
 
 
 				<!-- ########################################################## -->
@@ -560,32 +569,25 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 					<h2>Results: Neutral dynamics </h2>
 
 
-					<p> Let's start by considering the neutral case ($s=0$). In the classical Moran model, we expect that
+					<p> Let's start by considering the neutral case ($\rho_m = \rho_r=0$). In the classical Moran model, we expect that
 					\[
-					{\rm var}(\phi) \approx \frac{t}{N}
+					\frac{d}{dt}\phi = \sqrt{\frac{2\rho}{N}\phi(1-\phi)} \implies {\rm var}(\phi) \approx \frac{2\rho}{N}\phi_0(1-\phi_0)t
 				\]
 					</p>
 
+
 						<img class = "fragment" src="./figures/drif_ratio.png" height = 300>
-
-				<p class = "fragment"> Ratio is $O(N)$! Even in large populations the time dependence of division rates matters. What's going on? </p>
-
-					</section>
-
-					<!-- ########################################################## -->
-					<section>
-					<h2>Results: Neutral dynamics </h2>
-					<p> We can get some idea by looking at the limiting case ${\rm CV} \approx 0$. </p>
-
-					<p class = "fragment"> To get from the currect cells in the population, we have to go back $O(N)$ generations. </p>
-
-						<img class = "fragment" src="./figures/oscil.png" height = 300>
+						<div class = "r-stack">
+				<p class = "fragment current-visible"> Ratio is $O(1)$ $\implies$ effects of age-structure do not vanish in large populations.  What's going on? </p>
+				<p class = "fragment current-visible">Basic idea: age distribution gets smoothed out as $N$ grows, but overall strong of genetic drift decreases, so large $N$ means small effects matter. </p>
+					<p class = "fragment">In limit ${\rm CV} \to0$ we get an extra factor of $3/8N\ln(2)$. </p>
+				</div>
 					</section>
 
 					<!-- ########################################################## -->
 					<section>
 					<h2>Results: benificial mutations </h2>
-					<p> Now let's consider the fate of a benificial mutation occuring in one cell. Can we use the argument from before but with the drift barrier at $N_{\rm eff} = 2\rho/3\ln(2)N$? Actually not! It's not just about the drift barrier, but the out-of-steady-state dynamics of the initial mutant clone.  </p>
+					<p> Now let's consider the fate of a benificial mutation occuring in one cell. Can we use the argument from before but with the drift barrier at $N_{\rm eff} = 2\rho/3\ln(2)N$?   </p>
 					<div class = "r-stack">
 					<p class = "fragment current-visible"> Let $p_{\rm ext}$ be the exitinctin probability and $q$ be the chance that a cell is expelled before it divides. Then
 					\[
@@ -624,122 +626,24 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 				<h2>Results: long-term evolution </h2>
 				<h4>Do small effects on fixation probability matter in the long-term? </h4>
 
-				<p class = "fragment">  The average of $\rho$ over many trajectories obeys
-					\[  \frac{d}{dt}\langle \rho \rangle= \mu N \rho \delta \langle \rho p_{\rm fix} \rangle.
-				\]</p>
 
+				<p class = "fragment">  Recall that the time between mutations, and therefore the rate of evolution depends on the establishment time $\tau_{\rm est} = 1/N\mu p_{\rm fix}$</p>
+
+				<p class = "fragment"> Imagine mutations increases growth rate via generation time ${\rm CV}$ but mutations have a fixed selective advantage $s$. In classical Moran model, fitness increases linearly.</p>
 					<img class = "fragment" src="./figures/evo_traj.png" height = 300>
 
 			</section>
 
+			<!-- ########################################################## -->
+			<section>
+				<h2>Thanks for listening! </h2>
+
+					<img src="./figures/lineages1.svg">
+					<h4>Questions? </h4>
+			</section>
+
 
 </section>
-
-<!-- ########################################################## -->
-<!-- ########################################################## -->
-<!-- ########################################################## -->
-<!-- ########################################################## -->
-<!-- ########################################################## -->
-<!-- ########################################################## -->
-
-<section>
-
-
-						<!-- ########################################################## -->
-						<section>
-						<h2> The Euler-Lotka equation </h2>
-						<p>	We have derived the <b>the Euler-Lotka equation.</b>
-							<script type="math/tex; mode=display">
-								\frac{1}{2} = \int_0^{\infty}f(\tau)e^{-\rho \tau}d\tau = {\mathbb E}_f\left[e^{-\rho \tau}  \right].
-							</script>
-						</p>
-
-						<div class="fragment">
-
-						<p> If all cells live for exactly a time $\tau$, then $N(t) = 2^{t/\tau}$, so the rate of exponential growth is
-							<script type="math/tex; mode=display">
-						\rho = \ln(2)/\tau
-							</script></p></div>
-
-						<div class="fragment">
-						<p>
-							<b>Jensen's inequality</b> tells us
-							<script type="math/tex; mode=display">
-							\frac{1}{2} = {\mathbb E}_f\left[e^{-\rho \tau}  \right] \ge e^{-\rho {\mathbb E}_f[\tau]}
-							 \implies \rho \ge  \ln(2)/{\mathbb E}_f[\tau]
-							</script>
-						</p>
-						</div>
-
-						<div class="fragment">
-						<h4> If we fix the average generation time then variability will increase the rate of growth. </h4>
-						</div>
-
-
-						<!-- <div class="fragment">
-						<p>	Let's consider two limits:
-						<ul>
-							<li> All cells live for exactly a time $\tau_0$. Then we have
-								<script type="math/tex; mode=display">
-									\frac{1}{2} = e^{-\rho \tau_0} \implies \rho = \frac{\ln(2)}{\tau_0}
-								</script>
-							 </li>
-
-							 <li> Cells have a constant probability $1/\tau_0$ of dividing per unit time. Then
-								 <script type="math/tex; mode=display">
-									 \frac{1}{2} = \int_0^{\infty}e^{-\tau/\tau_0-\rho \tau}d\tau \implies \rho =\frac{1}{\tau_0}
-								 </script>
-							 </li>
-						</ul></p>
-						</div> -->
-
-
-						</section>
-
-
-						<!-- ########################################################## -->
-						<section>
-						<h2>Motivation from single-cell data</h2>
-
-
-						<img src="./figures/variability.png" >
-						<p> Eldar and Elowitz, Nature (2010) </p>
-
-						<!-- <div class="fragment">
-						<h4> &ldquo;Do Differences Make a Difference?&rdquo; - Altschuler and Wu (2010)</h4>
-					</div> -->
-						</section>
-
-
-						<!-- ########################################################## -->
-						<!-- <section>
-						<h2>Motivation from single-cell data</h2>
-
-						<img src="./figures/persisters.png" >
-						<p>  Balaban et al. Science (2004) </p>
-
-						</section> -->
-
-
-
-
-
-
-
-
-
-
-
-								</section>
-
-
-
-
-
-
-
-
-
 
 
 
