@@ -118,13 +118,13 @@
 
 		<p class="fragment current-visible" data-fragment-index="4"> We obtain the so-called replicator equations for the genotype fractions $\phi_i = n_i/N$:
 			\[
-			\frac{d\phi_i}{dt} = \phi_i\left(\alpha_i - D - \sum_j \phi_j(\rho_j-D)\right)
+			\frac{d\phi_i}{dt} = \phi_i\left(\rho_i - D - \sum_j \phi_j(\rho_j-D)\right)
 		\]
 	</p>
 
-	<p class="fragment current-visible" data-fragment-index="5"> In general, dynamics are difficult to solve, but with two species these become logistic growth:
+	<p class="fragment current-visible" data-fragment-index="5"> We will focus on the case of two species, a "mutant" with growth rate $\rho_m$ and "resident" with growth rate $\rho_r<\rho_m$:
 		\[
-		\frac{d\phi}{dt} = (\rho_1 - \rho_2)\phi(1-\phi)
+		\frac{d\phi}{dt} = (\rho_m - \rho_r)\phi(1-\phi)
 	\]
 </p>
 	</div>
@@ -135,16 +135,17 @@
 <!-- ########################################################## -->
 				<section>
 				<h2> Evolution in the Moran model </h2>
-				<p>These equations work well when $\phi$ is not too small, but new mutations emerge in single-cells, so $\phi(0) = 1/N$.</p>
+				<p>These equations work well when $\phi$ is not too small, but new mutations emerge in single-cells, so $\phi(0) = 1/N$ $\implies$ Model must include fluctuations! </p>
 
-				<h4 class = "fragment">Model must include fluctuations! This demands we make assumptions about single-cell dynamics </h4>
+				<h4 class = "fragment">Question: How do we had noise to the model?  </h4>
 
 				<div class="r-stack">
 				<div class = "fragment current-visible">
-				<p > <strong> Standard approach is Moran process (see Fisher 2007): </strong> <p>
-					<p> <ul> <li>Take cell division to be a Poission process; that is, time between cell divisions is exponentially distributed at a rate detemined by the genotypes growth rate: \[ p_i(\tau) = \rho_ie^{-\rho_i\tau}
-				\]  </li>
-				<li> Every time a cell divides another cell is expelled from the culture in order to keep $N$ fixed. </li>
+				<p > <strong> Two sources of noise: </strong> <p>
+					<p> <ul>
+						<li> <strong> Sampling </strong>: There is randomness in which cells get expelled from the culture. We assume each cell has equal chance of being expelled in a dilution event. </li>
+						 <li> <strong>Cell-to-cell variability</strong>: There is randomness in when cells divide (even among cells of the same type). We assume cells divide at a constant rate $\rho_i$; that is, $\rho_idt$ is the chance for a cell of genotype $i$ to divide in the interval $[t,t+dt)$. </li>
+
 			</ul></div>
 	<img class = "fragment current-visible" src="./figures/lineages2.svg">
 		</div>
@@ -161,21 +162,21 @@
 
 					<div class="r-stack">
 					<p class="fragment current-visible" data-fragment-index="3"> We can calculate the mean and variance of $\Delta \phi$:
-						\[\begin{aligned}\langle  \Delta \phi \rangle &= (\rho_m - \rho_r)\phi(1-\phi)\Delta t\\
-						{\rm var} \left(\Delta \phi \right) &= \frac{(\rho_m + \rho_r)}{N}\phi(1-\phi)\Delta t
+						\[\begin{aligned}\color{rgb(20, 116, 111)}{\langle  \Delta \phi \rangle} &= (\rho_m - \rho_r)\phi(1-\phi)\Delta t\\
+						\color{rgb(205, 88, 73)}{{\rm var} \left(\Delta \phi \right)} &= \frac{(\rho_m + \rho_r)}{N}\phi(1-\phi)\Delta t
 					\end{aligned}\]
 			</p>
 				<p class="fragment" data-fragment-index="4">
 					Corresponds to SDE
 					\[
-					\frac{d}{dt}\phi = \underbrace{(\rho_m-\rho_r)\phi(1-\phi)}_{\text{selection}} + \underbrace{\sqrt{(\rho_m + \rho_r)\frac{\phi(1-\phi)}{N}}\xi}_{\text{drift}}
+					\frac{d}{dt}\phi = \color{rgb(20, 116, 111)}{\underbrace{(\rho_m-\rho_r)\phi(1-\phi)}_{\text{selection}}} + \color{rgb(205, 88, 73)}	{\underbrace{\sqrt{(\rho_m + \rho_r)\frac{\phi(1-\phi)}{N}}\xi}_{\text{fluctuations/drift}}}
 					\]
 				</p></div>
 
 				<p class="fragment" data-fragment-index="4">
 					or the Fokker-Plank equation
 					\[
-					\frac{\partial}{\partial}p(\phi,t) = -\frac{\partial}{\partial \phi}[(\rho_m - \rho_r)\phi(1-\phi)p(\phi,t)] + \frac{\partial^2}{\partial \phi^2}\left[\frac{(\rho_m + \rho_r)\phi(1-\phi)}{N}p(\phi,t) \right]
+					\frac{\partial}{\partial t}p(\phi,t) = \color{rgb(20, 116, 111)}{-\frac{\partial}{\partial \phi}[(\rho_m - \rho_r)\phi(1-\phi)p(\phi,t)]} + \color{rgb(205, 88, 73)}	{\frac{\partial^2}{\partial \phi^2}\left[\frac{(\rho_m + \rho_r)\phi(1-\phi)}{N}p(\phi,t) \right]}
 					\]
 				</p>
 
@@ -188,7 +189,7 @@
 						<div class="r-stack">
 						<img class="fragment" src="./figures/moran_fix1.svg" data-fragment-index="1">
 					</div>
-						<p class="fragment" data-fragment-index="2" > The behavoir depends stronly on whether selection or drifts dominates. When does the transition occur? </p>
+						<p class="fragment" data-fragment-index="2" > The behavoir depends stronly on whether selection or drifts dominates. </p>
 						<h4 class="fragment" data-fragment-index="4" > When does the transition occur? </h4>
 
 			</section>
@@ -198,38 +199,34 @@
 			<section>
 			<h2> Evolution in the Moran model </h2>
 
-			<div class="r-stack">
-			<p class="fragment current-visible" data-fragment-index="1" > We know it must be when $\phi$ is small, so we make the approximation
+
+			<p class="fragment"> We know it must be when $\phi$ is small, so we make the approximation
 				\[
 		 \frac{d\phi}{dt} =\delta \rho\phi(1-\phi) + \sqrt{2\rho_r\frac{\phi(1-\phi)}{N}} \approx \delta \rho \phi + \sqrt{2\rho\phi/N}\xi
 						\]
 			 </p>
 
-			 <p class="fragment" data-fragment-index="2" > Implies the PDE
-				 \[
-				\frac{\partial}{\partial}p(\phi,t) = -\frac{\partial}{\partial \phi}[\delta \rho\phi p(\phi,t)] + \frac{\partial^2}{\partial \phi^2}\left[2\rho\frac{\phi}{N}p(\phi,t) \right]
-				\]
-			</p></div>
 
 
-			<p class = "fragment" data-fragment-index = "3">
+
+			<p class = "fragment">
 				We can use this to calculate the mean and variance
 				\[
 				\begin{aligned}
 				\langle \phi \rangle &=  \phi(0)e^{\delta\rho t}\\
-					\langle \phi^2 \rangle &= \left[\phi (0) e^{\delta \rho t} \left(e^{\delta \rho t} (N \delta \rho \phi (0)+1)-1\right) \right]/(N \delta rho)\\
+					\langle \phi^2 \rangle &= \left[\phi (0) e^{\delta \rho t} \left(e^{\delta \rho t} (N \delta \rho \phi (0)+1)-1\right) \right]/(N \delta \rho)\\
 					\end{aligned}
 				\]
 				 </p>
 
-		 <p class = "fragment" data-fragment-index = "3">
+		 <p class = "fragment">
 			The coefficient of variation
 			 \[
 		    CV = \frac{{\rm std}(\phi)}{\langle \phi\rangle} =\frac{1-e^{-st}}{Ns\phi_0} \to \frac{2\rho}{N\delta \rho \phi_0}
 		  			\]
 				</p>
 
-				<p class = "fragment" data-fragment-index = "4">
+				<p class = "fragment">
 				 Set $s = \delta \rho/\rho_r$. Then $1/Ns$ is called the <strong> Drift barrier </strong>
 					 </p>
 			</section>
@@ -352,17 +349,17 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 					src="https://www.youtube.com//embed/5PyoO4S3BU0">
 					</iframe>
 					<p>  Wang et al. Current Biology (2010) </p></div>
-					<img class = "fragment" src="./figures/mm_drawing.png" height="250">
+					<img class = "fragment" src="./figures/mm_drawing.png" height="300">
 				</div>
-					<div class = "r-stack">
-					<p class = "fragment current-visible"> The basic picture of single-cell growth: cells accumulate mass exponentially at a (<strong>random</strong>) rate $\rho$ between cell divisions, then divide in two after a (<strong>random</strong>) time $\tau$. Complex regulatory mechansims shape the distribution of genertaions times.
+
+					<p class = "fragment"> The basic picture of single-cell growth: cells accumulate mass exponentially at a (<strong>random</strong>) rate $\rho$ between cell divisions, then divide in two after a (<strong>random</strong>) time $\tau$. Complex regulatory mechansims shape the distribution of genertaions times
 						<!-- \[s_{b,k} = \frac{1}{2}s_{b,k-1}e^{\rho\tau} \implies \ln s_{b,k} = \rho \tau -\ln(2) + \ln s_{b,k-1}\]
 						Generation time must be coupled to initial cell-size and growth rate in order to mantain a stable distribution of cell-sizes -->
 					</p>
-					<h4 class = "fragment current-visible">
-						How does evolution shape the dynamics of cell growth and division?
+					<h4 class = "fragment">
+						Question: How does evolution shape the distribution the distribution of generation times?
 					</h4>
-					</div>
+
 					</section>
 
 					<!-- ########################################################## -->
@@ -506,7 +503,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 					<h4 class = "fragment">Same question as before: how do we add noise to this? </h4>
 					<div class = "r-stack">
-					<p class = "fragment current-visible">We want to understand how the stochastic dynamics of birth and death at the single-cell level propogate to population level, but in this case cells do not divide at a constant rate, therefore the stochastic events which change $\phi$ will depend not just on the number of mutant cells, but also their phenotypes.  </p>
+					<p class = "fragment current-visible">We want to understand how the stochastic dynamics of birth and death at the single-cell level propogate to population level, but in this case cells do not divide at a constant rate. We need to know the age of every cell in the population to obtain the division rate!  </p>
 
 				<p class = "fragment current-visible"> If $f_i(\tau)$ is the distribution of single-cell generation times conditioned on the growth rate and cell-size, the per unit time probability for the cell to divide is	\[
 				\gamma_i(a) = \frac{f_i(a)}{1- \int_0^a\,da'\,  f_i(a')} \]
@@ -579,14 +576,14 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 						<img class = "fragment" src="./figures/drif_ratio.png" height = 300>
 						<div class = "r-stack">
 				<p class = "fragment current-visible"> Ratio is $O(1)$ $\implies$ effects of age-structure do not vanish in large populations.  What's going on? </p>
-				<p class = "fragment current-visible">Basic idea: age distribution gets smoothed out as $N$ grows, but overall strong of genetic drift decreases, so large $N$ means small effects matter. </p>
+				<p class = "fragment current-visible"> <strong>Basic idea:</strong> age distribution gets smoothed out as $N$ grows, but overall strength of genetic drift decreases, so large $N$ means small effects matter. </p>
 					<p class = "fragment">In limit ${\rm CV} \to0$ we get an extra factor of $3/8N\ln(2)$. </p>
 				</div>
 					</section>
 
 					<!-- ########################################################## -->
 					<section>
-					<h2>Results: benificial mutations </h2>
+					<h2>Results: beneficial mutations </h2>
 					<p> Now let's consider the fate of a benificial mutation occuring in one cell. Can we use the argument from before but with the drift barrier at $N_{\rm eff} = 2\rho/3\ln(2)N$?   </p>
 					<div class = "r-stack">
 					<p class = "fragment current-visible"> Let $p_{\rm ext}$ be the exitinctin probability and $q$ be the chance that a cell is expelled before it divides. Then
@@ -616,7 +613,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 					<img class = "fragment" src="./figures/pfix_sims.png" height = 300></div>
 					<div class = "fragment">
-					<p>Notice that as ${\rm CV}\to 0$, we obtain $p_{\rm fix} 2\ln(2)s \ne N/N_{\rm eff}s$. </p>
+					<p>Notice that as ${\rm CV}\to 0$, we obtain $p_{\rm fix} = 2\ln(2)s \ne N/N_{\rm eff}s$. </p>
 
 					<h4>We cannot capature the dynamics by rescaling Moran SDE -- connection between genetic drift and fixation breaks down. </h4></div>
 				</section>
@@ -633,8 +630,22 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 					<img class = "fragment" src="./figures/evo_traj.png" height = 300>
 
 			</section>
+		</section>
 
 			<!-- ########################################################## -->
+
+			<section>
+				<h2>What's next? </h2>
+				<p>Our illustrates how the way in which we incoperate noise into our evolutionary dynamics models can have subtle effects which ultimately influence qualitative aspects of evolution trajecotries.   </p>
+				<p> Many open questions remain about how these effects manifest in real experiments. </p>
+				<ul>
+					<li> We have swept a key fact under the rug: Moran model is already an idealized description of the continous culture. How does discreteness in diluation events influence our noise model?  </li>
+					<li> It's also interesting to think about continous cultures vs. serial dilution cultures and how non-genetic variability manifests in these different settings. In serial dilution culture, the main source of non-genetic variability is the lag time. </li>
+					<li> It's also interesting to think about continous cultures vs. serial dilution cultures and how non-genetic variability manifests in these different settings. In serial dilution culture, the main source of non-genetic variability is the lag time. </li>
+				</ul>
+			</section>
+
+				<!-- ########################################################## -->
 			<section>
 				<h2>Thanks for listening! </h2>
 

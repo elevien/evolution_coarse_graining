@@ -5,6 +5,7 @@
 @import url(./fonts/cm/cmuserif_bold_macroman/stylesheet.css);
 @import url(./fonts/cm/cmutypewritertext_light_macroman/stylesheet.css);
 @import url(./fonts/cm/cmutypewritertext_bold_macroman/stylesheet.css);
+@import url(./fonts/cm/cmutypewritertext_oblique_macroman/stylesheet.css);
 /**
  * Solarized colors by Ethan Schoonover
  */
@@ -68,11 +69,10 @@ html * {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #586e75;
-  font-family: "cmu_serifbold";
+  font-family: "cmu_serif";
   font-weight: normal;
   line-height: 1.2;
   letter-spacing: normal;
-  text-transform: uppercase;
   text-shadow: none;
   word-wrap: break-word; }
 
@@ -88,7 +88,7 @@ html * {
 
 .reveal h4 {
   color:rgba(205, 88, 73,1);
-  font-family: "cmu_typewriter_textlight", Impact, sans-serif;
+  font-family: "cmu_typewriter_textitalic";
   font-size: 0.8em; }
 
 
