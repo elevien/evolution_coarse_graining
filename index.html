@@ -54,11 +54,11 @@
 				<!-- ########################################################## -->
 				<section>
 					 </br>
-					<h3>Coarse graining evolutionary dynamics models</h3>
+					<h3>Coarse-graining evolutionary dynamics models</h3>
 					 <!-- <img src="./figures/euler.png" height="400"> -->
 					 	<img src="./figures/cover.svg" style="opacity:0.4;filter:alpha(opacity=40);">
 					<h3>Ethan Levien (Dartmouth College)</h3>
-					<p>Joint work with Farshid Jafarpour (Utrecht University) </br>and Ariel Amir (Harvard) </p>
+					<p>Joint work with Farshid Jafarpour (Utrecht University) </br>and Ariel Amir (Harvard University) </p>
 
 				</section>
 
@@ -140,13 +140,13 @@
 			</br>
 				<p>These equations work well when $\phi$ is not too small, but new mutations emerge in single-cells, so $\phi(0) = 1/N$ $\implies$ Model must include fluctuations! </p>
 
-				<h4 class = "fragment">Question: How do we had noise to the model?  </h4>
+				<h4 class = "fragment">Question: How do we add noise to the model?  </h4>
 
 				<div class="r-stack">
 				<div class = "fragment current-visible">
 				<p > <strong> Modeling noise in the (continous time) Moran model </strong> <p>
 					<p> <ul>
-						<li> <strong> Sampling </strong>: We assume each cell has equal chance of being expelled in a dilution event. </li>
+						<li> <strong> Sampling</strong>: We assume each cell has equal chance of being expelled in a dilution event. </li>
 						 <li> <strong>Cell-to-cell variability</strong>: We assume cells divide at a constant rate $\rho_i$; that is, $\rho_idt$ is the chance for a cell of genotype $i$ to divide in the interval $[t,t+dt)$. </li>
 
 			</ul></div>
@@ -180,7 +180,7 @@
 				<p class="fragment" data-fragment-index="4">
 					or the Fokker-Plank equation
 					\[
-					\frac{\partial}{\partial t}p(\phi,t) = \color{rgb(20, 116, 111)}{-\frac{\partial}{\partial \phi}[(\rho_m - \rho_r)\phi(1-\phi)p(\phi,t)]} + \color{rgb(205, 88, 73)}	{\frac{\partial^2}{\partial \phi^2}\left[\frac{(\rho_m + \rho_r)\phi(1-\phi)}{N}p(\phi,t) \right]}
+					\frac{\partial}{\partial t}p(\phi,t) = \color{rgb(20, 116, 111)}{-\frac{\partial}{\partial \phi}[(\rho_m - \rho_r)\phi(1-\phi)p(\phi,t)]} + \color{rgb(205, 88, 73)}	{\frac{1}{2}\frac{\partial^2}{\partial \phi^2}\left[\frac{(\rho_m + \rho_r)\phi(1-\phi)}{N}p(\phi,t) \right]}
 					\]
 				</p>
 
@@ -203,8 +203,8 @@
 			<section>
 			<h2> The Moran model </h2>
 
-
-			<p class="fragment"> We know it must be when $\phi$ is small, so we can linearize
+		</br>
+			<p> We know it must be when $\phi$ is small, so we can linearize
 				\[
 		 \frac{d\phi}{dt} =\delta \rho\phi(1-\phi) + \sqrt{2\rho_r\frac{\phi(1-\phi)}{N}} \approx \delta \rho \phi + \sqrt{2\rho\phi/N}\xi
 						\]
@@ -231,9 +231,9 @@
 		  			\]
 				</p>
 
-				<h4 class = "fragment">
+				<p class = "fragment">
 				The quantity $\color{rgb(205, 88, 73)}{1/Ns}$ is called the <strong> Drift barrier </strong>
-			</h4>
+			</p>
 			</section>
 
 
@@ -266,11 +266,11 @@
 
 
 		<p class="fragment">
-		Fisher 2007: Below the drift barrier, we can approximate the dynamics over a time $\Delta$ by
+		Heuristic argument from Fisher 2007: Below the drift barrier, we can approximate the dynamics over a time $\Delta$ by
 			\[
-			\Delta \phi = \phi(t+\delta)-\phi(t) = \sqrt{\frac{2\rho_r \Delta_1\phi(t)}{N}}Z,\quad Z \sim {\rm Normal}(0,1)
+			\Delta \phi = \phi(t+\Delta)-\phi(t) = \sqrt{\frac{2\rho_r \Delta\phi(t)}{N}}Z,\quad Z \sim {\rm Normal}(0,1)
 			\]
-			This will approximation will give us an order-of-magnitude estimate of $\Delta \phi$ before some time $\Delta_1$ when  $\Delta_1 = \phi(t)N/\rho_r$.
+			This will approximation will give us an order-of-magnitude estimate of $\Delta \phi$ before some time $\Delta_1 = O(\phi(t)N/\rho_r)$.
 		</p>
 
 		<p class="fragment">
@@ -280,6 +280,20 @@
 
 
 	</section>
+
+	<!-- ########################################################## -->
+	<section>
+	<h2> The Moran model </h2>
+				<h4>So what is the chance the mutant lineage reaches the drift barrier before going extinct?</h4>
+
+
+	<img src = "./figures/fix_iter_drawing.png" height=400>
+
+
+
+
+
+</section>
 
 
 	<!-- ########################################################## -->
@@ -318,7 +332,7 @@ Plugging $k = \ln(t\rho_r)/\ln(2)$ we are obtain order-of-magnitude estimates of
 
 	<p class = "fragment"> Two important time-scales:</p>
 		<ul>
-			<li class = "fragment"><strong> Establishment time $\tau_{\rm est}$</strong>: The time for a new mutation to occur and become established (reach the drift barrier) in the population. This is on the order of $1/N\mu \rho_r s$.  </li>
+			<li class = "fragment"><strong> Establishment time $\tau_{\rm est}$</strong>: The time for a new mutation to occur and become established (reach the drift barrier) in the population. Mutations happen at a rate $\mu$ per cell-division and a fraction $p_{\rm fix} \sim s$ of them will reach the dirft barrier, so $\tau_{\rm est}  = 1/Ns\rho_r\mu$.  </li>
 		</br>
 				<li class = "fragment"><strong> Sweep time $\tau_{\rm sw}$</strong>: The time for an established mutation to sweep through the population. Since established mutations grow approximately exponentially starting from the drift barrier, $\tau_{\rm sw}$ is on the order of $1/\delta \rho\ln (Ns)$  </li>
 		</ul>
@@ -334,12 +348,23 @@ Plugging $k = \ln(t\rho_r)/\ln(2)$ we are obtain order-of-magnitude estimates of
 	<p>In general, very complicated problem because we need to consider competition between >2 mutants and the theory above breaks down. </p>
 
 	<h4> When can we neglect competition between mutant lineages? </h4>
+		<img src = "./figures/succ_mutation_drawing.png" height=400>
+	</section>
+
+
+<!-- ########################################################## -->
+<section>
+<h2> The Moran model </h2>
+	<h4>How fast do mutations accumulate?</h4>
+	<p>In general, very complicated problem because we need to consider competition between >2 mutants and the theory above breaks down. </p>
+
+	<h4> When can we neglect competition between mutant lineages? </h4>
 	<p> Condition for "succesive mutations":
 	\[\tau_{\rm sw} = 1/\delta \rho\ln (Ns) \ll \tau_{\rm est} = 1/N\mu \rho_r s \implies N\mu \ln Ns \ll 1 \]</p>
 
-	<p class = "fragment">In this regime, fixations are Poisson process with rate $1/\tau_{\rm est} = N\mu s$. </p>
+	<p class = "fragment">In this regime, fixations are Poisson process with rate $1/\tau_{\rm est} = N\rho_r\mu s$. </p>
 		<p class = "fragment"> Simple case where all mutation increase fitness by $\delta \rho$:
-	\[ \frac{d}{dt}\langle\rho \rangle = \frac{\delta \rho}{\tau_{\rm est}} = N\mu (\delta \rho)^2\implies \langle \rho(t) \rangle \sim N\mu (\delta \rho)^2\] </p>
+	\[ \frac{d}{dt}\langle\rho \rangle = \frac{\delta \rho}{\tau_{\rm est}} = N\mu (\delta \rho)^2\implies \langle \rho(t) \rangle \sim tN\mu (\delta \rho)^2\] </p>
 </section>
 
 
@@ -360,7 +385,7 @@ Plugging $k = \ln(t\rho_r)/\ln(2)$ we are obtain order-of-magnitude estimates of
 		</br>
 			<p class = "fragment">Underneath the Moran model was a pretty strong assumption about how noise in the growth and division of single-cell propogates to the population level.   </p>
 
-				<p class = "fragment">We will revist this assumption in the context of the Moran model, but first we need to understand some basic aspects of so-called <strong>are structured populations</strong>.  </p>
+				<p class = "fragment">We will revist this assumption in the context of the Moran model, but first we need to understand some basic aspects of so-called <strong>age-structured populations</strong>.  </p>
 
 
 			</section>
@@ -518,37 +543,64 @@ Plugging $k = \ln(t\rho_r)/\ln(2)$ we are obtain order-of-magnitude estimates of
 						</script>
 						<p> In general $\color{rgb(20, 116, 111)}{f_{\rm tree}(\tau)} \ne  \color{rgb(205, 88, 73)}{f(\tau)}$ </p></div>
 
+							<p class= "fragment"> <strong>Interesting question</strong>: Can you infer $\Lambda$ from mother-machine lineage data? See Levien, GrandPre, Amir PRL 2020. </p>
 
+
+						</section>
+
+
+				<!-- ########################################################## -->
+					<section>
+						<h2> Exponential growth rate and age distribution </h2>
+						<p> Another way to think about the exponetial growth rate: it is the
+							average division rate over all cells in the population.</p>
+							<p class = "fragment"> If $f_i(\tau)$ is the distribution of single-cell generation times conditioned on the growth rate and cell-size, the per unit time probability for the cell to divide is	\[
+							\gamma_i(a) = \frac{f_i(a)}{1- \int_0^a\,da'\,  f_i(a')} \]
+							Note special case: $f_i = \rho_ie^{\rho_i\tau}\implies \gamma_i = \rho_i$.
+						</p>
+						<p class = "fragment">Then we have (in a large population)
+						\[\frac{d}{dt}N = \rho N = \langle \gamma_i(a) \rangle_h N\]
+					where the average is taken over the distribution of ages $h(a)$ in the population.  </p>
+					</section>
+
+					<!-- ########################################################## -->
+						<section>
+							<h2> Exponential growth rate and age distribution </h2>
+									<img src = "./figures/age_dist_drawing.png" height=400>
+										<h4 class = "fragment"> What about a finite population? </h4>
 						</section>
 
 
 
 				<!-- ########################################################## -->
 				<section>
-				<h2> Bridging-scales </h2>
-				<h4> What about a finite population? </h4>
-					<p class = "fragment">In this case we can't use the self-similarity trick, but if population is large we expect
-					\[\frac{d}{dt}\phi  = (\rho_m-\rho_r)\phi(1-\phi)\quad\quad{\rm with}\quad\quad  \frac{1}{2} = \int_0^{\infty}f_i(\tau)d\tau, \quad i \in \{m,r\}\]</p>
+				<h2> Finite populations </h2>
 
-					<h4 class = "fragment">Same question as before: how do we add noise to this? </h4>
 					<div class = "r-stack">
-					<p class = "fragment current-visible">We want to understand how the stochastic dynamics of birth and death at the single-cell level propogate to population level, but in this case cells do not divide at a constant rate. We need to know the age of every cell in the population to obtain the division rate!  </p>
+							<!-- <img class = "fragment current-visible" src = "./figures/age_dist_samp_drawing.png" height=300> -->
+					<p class = "fragment">
+					Sampling preserves age distribution, in the limit $N\to \infty$ the age distribution will have converged and we get
+					\[\frac{d}{dt}\phi  = (\rho_m-\rho_r)\phi(1-\phi)\quad\quad{\rm with}\quad\quad  \frac{1}{2} = \int_0^{\infty}f_i(\tau)d\tau, \quad i \in \{m,r\}\]
+			Connecting growth rates to single-cell statistics is actually more subtle; see Levien, Kondev, Amir 2019</p></div>
+		</br>
+			<h4 class = "fragment">Same question as before: how do we add noise to this? </h4>
+			<div class = "r-stack">
+			<p class = "fragment current-visible">We want to understand how the stochastic dynamics of birth and death at the single-cell level propogate to population level, but in this case cells do not divide at a constant rate. We need to know the age of every cell in the population to obtain the division rate! </br></br>
+			We can try writing down a "master equation" which completely specifies the distribution of ages and genotypes. </p>
 
-				<p class = "fragment current-visible"> If $f_i(\tau)$ is the distribution of single-cell generation times conditioned on the growth rate and cell-size, the per unit time probability for the cell to divide is	\[
-				\gamma_i(a) = \frac{f_i(a)}{1- \int_0^a\,da'\,  f_i(a')} \]
-				Note special case: $f_i = \rho_ie^{\rho_i\tau}\implies \gamma_i = \rho_i$.
-			</p>
 
-				<p class="fragment current-visible">	We then get a hyperbolic PDE for $Q$:\[
-			 \frac{d}{dt} Q({\bf u},{\bf a},t) + \sum_{k=1}^N \frac{\partial}{\partial a_k} Q({\bf u},{\bf a},t)
-			 = - Q({\bf u},{\bf a},t)\left(D+ \sum_{k=1}^N \gamma_{u_k}(a_k)\right) \]
-			along with the boundary conditions
-			 \[
-			Q(S_{k,u_v}({\bf u}),S_{k,0}(S_{v,0}({\bf a})),t)= \frac{1}{N} \gamma_{u_v}(a_v)Q({\bf u},{\bf a},t)\]</p>
 
-			</div>
+		<p class="fragment current-visible">	We then get a hyperbolic PDE for $Q$:\[
+	 \frac{d}{dt} Q({\bf u},{\bf a},t) + \sum_{k=1}^N \frac{\partial}{\partial a_k} Q({\bf u},{\bf a},t)
+	 = - Q({\bf u},{\bf a},t)\left(D+ \sum_{k=1}^N \gamma_{u_k}(a_k)\right) \]
+	along with the boundary conditions
+	 \[
+	Q(S_{k,u_v}({\bf u}),S_{k,0}(S_{v,0}({\bf a})),t)= \frac{1}{N} \gamma_{u_v}(a_v)Q({\bf u},{\bf a},t)\]</p>
 
-				</section>
+	</div>
+
+			</section>
+
 
 
 
@@ -562,12 +614,12 @@ Plugging $k = \ln(t\rho_r)/\ln(2)$ we are obtain order-of-magnitude estimates of
 						<!-- \[\begin{aligned}\text{# of mutants gained} &\sim {\rm Poission}\left(N\left[\sum_{j:u_j=m}\gamma_j(a_j,\rho_j,s_j) \right]\phi(1-\phi) \Delta t\right)\\
 						\text{# of mutants lost} &\sim {\rm Poission}\left(N\left[\sum_{j:u_j=r}\gamma_j(a_j,\rho_j,s_j) \right]\phi(1-\phi) \Delta t\right)
 						\end{aligned}\]-->
-						\[\begin{aligned}\text{# of mutants gained} &\sim {\rm Poission}\left(N\langle\gamma_m(a_j) \rangle\phi(1-\phi) \Delta t\right)\\
-						\text{# of mutants lost} &\sim {\rm Poission}\left(N\langle\gamma_r(a_j) \rangle\phi(1-\phi) \Delta t\right)
+						\[\begin{aligned}\text{# of mutants gained} &\sim {\rm Poission}\left(N\langle\gamma_m(a_i) \rangle_h\phi(1-\phi) \Delta t\right)\\
+						\text{# of mutants lost} &\sim {\rm Poission}\left(N\langle\gamma_r(a_j) \rangle_h\phi(1-\phi) \Delta t\right)
 						\end{aligned}\]</p>
 
 						<p class="fragment">
-						We might guess that we can make the approximation $\langle\gamma_i(a_j,\rho_j,s_j) \rangle \approx \rho_i$. This obviously isn't going to work when $N\phi$ is very small, but perhaps if the drift barrier $1/s$ is not too small we can capture the dynamics with the SDE:
+						We might guess that we can make the approximation $\langle\gamma_i(a_j,\rho_j,s_j) \rangle_h \approx \rho_i$. This obviously isn't going to work when $N\phi$ is very small, but perhaps if the drift barrier $1/s$ is not too small we can capture the dynamics with the SDE:
 						\[
 						\frac{d}{dt}\phi = (\rho_m-\rho_r)\phi(1-\phi) + \sqrt{(\rho_r + \rho_m)\frac{\phi(1-\phi)}{N}}\xi
 					\]
@@ -601,13 +653,32 @@ Plugging $k = \ln(t\rho_r)/\ln(2)$ we are obtain order-of-magnitude estimates of
 				\]
 					</p>
 
-
 						<img class = "fragment" src="./figures/drif_ratio.png" height = 300>
+
+				</br>
 						<div class = "r-stack">
 				<p class = "fragment current-visible"> Ratio is $O(1)$ $\implies$ effects of age-structure do not vanish in large populations.  What's going on? </p>
 				<p class = "fragment current-visible"> <strong>Basic idea:</strong> age distribution gets smoothed out as $N$ grows, but overall strength of genetic drift decreases, so large $N$ means small effects matter. </p>
 					<p class = "fragment">In limit ${\rm CV} \to0$ we get an extra factor of $3/8N\ln(2)$. </p>
 				</div>
+					</section>
+
+
+					<section>
+					<h2>Results: Neutral dynamics </h2>
+
+
+					<p> Let's start by considering the neutral case ($\rho_m = \rho_r=0$). In the classical Moran model, we expect that
+					\[
+					\frac{d}{dt}\phi = \sqrt{\frac{2\rho}{N}\phi(1-\phi)} \implies {\rm var}(\phi) \approx \frac{2\rho}{N}\phi_0(1-\phi_0)t
+				\]
+					</p>
+
+						<img src="./figures/oscil.png" height = 300>
+
+				</br>
+
+					<p>Fluctuations in division rate exhibit stochastic osillations (they are non-Markovian) </p>
 					</section>
 
 					<!-- ########################################################## -->
@@ -638,19 +709,20 @@ Plugging $k = \ln(t\rho_r)/\ln(2)$ we are obtain order-of-magnitude estimates of
 
 					<!-- ########################################################## -->
 					<section>
-					<h2>Results: benificial mutations </h2>
-					<p> <strong>Example </strong>: Let's assume the distribution of generation times is a gamma distribution. </p>
+					<h2>Results: beneficial mutations </h2>
+					<p> <strong>Example</strong>: Let's assume the distribution of generation times is a gamma distribution. </p>
 					<div class="container">
 						<div class = "col">
 						</br>
 					<p class = "fragment"> We can show that
 						\[
 				p_{\rm fix} =  \frac{2}{{\rm CV}_{\tau}^2}\left(1-2^{-{\rm CV}_{\tau}^2} \right)s + O(s^2).\]</p>
+				<p class= "fragment">Notice that as ${\rm CV}\to 0$, we obtain $p_{\rm fix} = 2\ln(2)s \ne N/N_{\rm eff}s$. </p>
 			</div>
 <div class = "col">
 					<img class = "fragment" src="./figures/pfix_sims.png" height = 300></div></div>
 					<div class = "fragment">
-					<p>Notice that as ${\rm CV}\to 0$, we obtain $p_{\rm fix} = 2\ln(2)s \ne N/N_{\rm eff}s$. </p>
+
 
 					<h4>We cannot capature the dynamics by rescaling Moran SDE -- connection between genetic drift and fixation breaks down. </h4></div>
 				</section>
@@ -661,7 +733,7 @@ Plugging $k = \ln(t\rho_r)/\ln(2)$ we are obtain order-of-magnitude estimates of
 				<h4>Do small effects on fixation probability matter in the long-term? </h4>
 
 
-				<p class = "fragment">  Recall that the time between mutations, and therefore the rate of evolution depends on the establishment time $\tau_{\rm est} = 1/N\mu p_{\rm fix}$</p>
+				<p class = "fragment">  Recall that the time between mutations, and therefore the rate of evolution depends on the establishment time $\tau_{\rm est} = 1/(N\rho_r\mu p_{\rm fix})$</p>
 
 				<p class = "fragment"> Imagine mutations increases growth rate via generation time ${\rm CV}$ but mutations have a fixed selective advantage $s$. In classical Moran model, fitness increases linearly.</p>
 					<img class = "fragment" src="./figures/evo_traj.png" height = 300>
@@ -672,20 +744,26 @@ Plugging $k = \ln(t\rho_r)/\ln(2)$ we are obtain order-of-magnitude estimates of
 			<!-- ########################################################## -->
 
 			<section>
-				<h2>What's next? </h2>
-				<p> Many open questions remain about how these effects manifest in real experiments. </p>
-				<ul>
-					<li> We have swept a key fact under the rug: Moran model is already an idealized description of the continous culture. How does discreteness in diluation events influence our noise model?  </li>
-					<li> It's also interesting to think about continous cultures vs. serial dilution cultures and how non-genetic variability manifests in these different settings. In serial dilution culture, the main source of non-genetic variability is the lag time. </li>
-				</ul>
+				<h2>Future directions </h2>
+
+			<p class = "fragment"> <strong>Correlated generation times</strong>: When generation times are correlated (the more biologically realistic scenerio) we get an integral equation for the extinction probability conditioned on the ancestral cells generation time:
+					\[p_{\rm ext}(\tau) = q(\tau) + (1-q(\tau))\left[\int_0^{\infty}p_{\rm ext}(\tau')f(\tau'|\tau)d\tau'\right]^2 \] Haven't made much progress on this!  </p>
+
+	<p class = "fragment"> <strong>Evolution in serial dilution experiments</strong>:
+	In serial diluation experiments the situation is quite different because sampling occurs after a long period of growth. In this case a major source of fluctuations is the lag time-distribution, but many of the conceptual points we've made still apply (e.g. effects on long-term evolution).  </p>
+
+	<p class = "fragment"> <strong>Predictions of genetic drift in continuous culture experiments</strong>:
+   There has been some work measuring effective population size in continuous culture, but I think it would be cool to predict this based on knowledge of experimental parameters and single-cell traits. Can we predict how effective population size will respond to tuning e.g. dilution rate? That would be cool!   </p>
 			</section>
 
 				<!-- ########################################################## -->
 			<section>
-				<h2>Thanks for listening! </h2>
+				<h2>Thanks for listening </h2>
 
 					<img src="./figures/cover.svg">
 					<h4>Questions? </h4>
+
+					<p>Contact me for opportunities in my group!  </p>
 			</section>
 
 

@@ -120,7 +120,9 @@ html * {
 
 .reveal strong,
 .reveal b {
-  font-weight: bold; }
+  font-weight: bold;
+  color:rgba(20, 116, 111);}
+
 
 .reveal em {
   font-style: italic; }
