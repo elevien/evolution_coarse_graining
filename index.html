@@ -53,23 +53,25 @@
 			<div class="slides">
 				<!-- ########################################################## -->
 				<section>
-					<h2>Coarse graining evolutionary dynamics models</h2>
+					 </br>
+					<h3>Coarse graining evolutionary dynamics models</h3>
 					 <!-- <img src="./figures/euler.png" height="400"> -->
-
-					 	<img src="./figures/lineages1.svg">
-					<h3>Ethan Levien</h3>
-					<p>Joint work with Farshid Jafarpour (Utrecht University) and Ariel Amir (Harvard) </p>
+					 	<img src="./figures/cover.svg" style="opacity:0.4;filter:alpha(opacity=40);">
+					<h3>Ethan Levien (Dartmouth College)</h3>
+					<p>Joint work with Farshid Jafarpour (Utrecht University) </br>and Ariel Amir (Harvard) </p>
 
 				</section>
 
 
 <!-- ########################################################## -->
 	<section>
-		<h2> Selection acts on phsiological traits? </h2>
-
-		<img src="./figures/scales.png">
-
-		<p> The central challange in evolution is to connect processes across a range of spatial and temporal scales: evolution plays out at population level but is constrained by microscopic interactions</p>
+		<h2> Evolution: a problem of scales </h2>
+	</br>
+		<div class = "r-stack">
+		<img  src="./figures/scales.png">
+		<img class = "fragment" src="./figures/scales2.png">
+	</div>
+		<p> One of the central challanges to making quantitative predictions about evolutionary dynamics is that in order to understand evolution we need to connect processes on divergent scales: Mutations alter microscopic processes in the cell, but their fate is determined by population level dynamics.  </p>
 		</section>
 
 <!-- ########################################################## -->
@@ -83,7 +85,7 @@
         <section>
 				<h2> Part 1: The population scale </h2>
 					<div class="r-stack">
-				<img src="./figures/turbidostat.png" height="400" data-fragment-index="1">
+				<img src="./figures/turbidostat.png" height="450" data-fragment-index="1">
 				<img class="fragment current-visible" src="./figures/eVOLVER.png" height="400" data-fragment-index="3">
 			</div>
 				<!-- <p>The turbidostat is a type of Continuous culture in which the population size is kept approximately constant through feedback between an optical density detector and a pump </p> -->
@@ -134,27 +136,29 @@
 
 <!-- ########################################################## -->
 				<section>
-				<h2> Evolution in the Moran model </h2>
+				<h2> The Moran model </h2>
+			</br>
 				<p>These equations work well when $\phi$ is not too small, but new mutations emerge in single-cells, so $\phi(0) = 1/N$ $\implies$ Model must include fluctuations! </p>
 
 				<h4 class = "fragment">Question: How do we had noise to the model?  </h4>
 
 				<div class="r-stack">
 				<div class = "fragment current-visible">
-				<p > <strong> Two sources of noise: </strong> <p>
+				<p > <strong> Modeling noise in the (continous time) Moran model </strong> <p>
 					<p> <ul>
-						<li> <strong> Sampling </strong>: There is randomness in which cells get expelled from the culture. We assume each cell has equal chance of being expelled in a dilution event. </li>
-						 <li> <strong>Cell-to-cell variability</strong>: There is randomness in when cells divide (even among cells of the same type). We assume cells divide at a constant rate $\rho_i$; that is, $\rho_idt$ is the chance for a cell of genotype $i$ to divide in the interval $[t,t+dt)$. </li>
+						<li> <strong> Sampling </strong>: We assume each cell has equal chance of being expelled in a dilution event. </li>
+						 <li> <strong>Cell-to-cell variability</strong>: We assume cells divide at a constant rate $\rho_i$; that is, $\rho_idt$ is the chance for a cell of genotype $i$ to divide in the interval $[t,t+dt)$. </li>
 
 			</ul></div>
-	<img class = "fragment current-visible" src="./figures/lineages2.svg">
+
+	<img class = "fragment current-visible" src="./figures/cover.svg">
 		</div>
 				</section>
 
 
 <!-- ########################################################## -->
 				<section>
-					<h2> Evolution in the Moran model </h2>
+					<h2> The Moran model </h2>
 					<p class = "fragment" data-fragment-index="1"> This means that over a small time interval $\Delta t$, the number of mutants gained and lost are both given by Poisson distributions:
 					\[\begin{aligned}\text{# of mutants gained} &\sim {\rm Poission}(N\rho_m\phi(1-\phi) \Delta t)\\
 					\text{# of mutants lost} &\sim {\rm Poission}(N\rho_r\phi(1-\phi) \Delta t)
@@ -184,7 +188,7 @@
 
 				<!-- ########################################################## -->
 				<section>
-				<h2> Properties of the Moran model </h2>
+				<h2> The Moran model </h2>
 						<p> Some trajectories starting on $\phi(0) = 1/N$  </p>
 						<div class="r-stack">
 						<img class="fragment" src="./figures/moran_fix1.svg" data-fragment-index="1">
@@ -197,10 +201,10 @@
 
 			<!-- ########################################################## -->
 			<section>
-			<h2> Evolution in the Moran model </h2>
+			<h2> The Moran model </h2>
 
 
-			<p class="fragment"> We know it must be when $\phi$ is small, so we make the approximation
+			<p class="fragment"> We know it must be when $\phi$ is small, so we can linearize
 				\[
 		 \frac{d\phi}{dt} =\delta \rho\phi(1-\phi) + \sqrt{2\rho_r\frac{\phi(1-\phi)}{N}} \approx \delta \rho \phi + \sqrt{2\rho\phi/N}\xi
 						\]
@@ -210,25 +214,26 @@
 
 
 			<p class = "fragment">
-				We can use this to calculate the mean and variance
-				\[
+				And calculate moments of linearized equation
+				\[\frac{d}{dt}\left\langle\phi^k \right\rangle = \int \phi^k \frac{\partial}{\partial t}p(\phi,t)d\phi \to \text{integrate by parts}\]
+				<!-- \[
 				\begin{aligned}
-				\langle \phi \rangle &=  \phi(0)e^{\delta\rho t}\\
-					\langle \phi^2 \rangle &= \left[\phi (0) e^{\delta \rho t} \left(e^{\delta \rho t} (N \delta \rho \phi (0)+1)-1\right) \right]/(N \delta \rho)\\
+				\langle \phi \rangle &=  \phi_0e^{\delta\rho t}\\
+					\langle \phi^2 \rangle &= \left[\phi_0 e^{\delta \rho t} \left(e^{\delta \rho t} (N \delta \rho \phi (0)+1)-1\right) \right]/(N \delta \rho)\\
 					\end{aligned}
-				\]
+				\] -->
 				 </p>
 
 		 <p class = "fragment">
-			The coefficient of variation
+			which lead to an equation for the coefficient of variation (CV):
 			 \[
-		    CV = \frac{{\rm std}(\phi)}{\langle \phi\rangle} =\frac{1-e^{-st}}{Ns\phi_0} \to \frac{2\rho}{N\delta \rho \phi_0}
+		    CV = \frac{{\rm std}(\phi)}{\langle \phi\rangle} =\frac{2\rho_r(1-e^{-st})}{Ns\phi_0} \to \frac{2}{Ns \phi_0},\quad s = \frac{\delta \rho}{\rho_r}
 		  			\]
 				</p>
 
-				<p class = "fragment">
-				 Set $s = \delta \rho/\rho_r$. Then $1/Ns$ is called the <strong> Drift barrier </strong>
-					 </p>
+				<h4 class = "fragment">
+				The quantity $\color{rgb(205, 88, 73)}{1/Ns}$ is called the <strong> Drift barrier </strong>
+			</h4>
 			</section>
 
 
@@ -256,28 +261,22 @@
 
 		<!-- ########################################################## -->
 		<section>
-		<h2> Evolution in the Moran model </h2>
+		<h2> The Moran model </h2>
 					<h4>So what is the chance the mutant lineage reaches the drift barrier before going extinct?</h4>
 
 
 		<p class="fragment">
-		Below the drift barrier, we can approximate the dynamics over a time $\Delta$ by
+		Fisher 2007: Below the drift barrier, we can approximate the dynamics over a time $\Delta$ by
 			\[
-			\Delta \phi = \phi(t+\delta)-\phi(t) = \sqrt{\frac{2\rho \Delta\phi(t)}{N}}Z,\quad Z \sim {\rm Normal}(0,1)
+			\Delta \phi = \phi(t+\delta)-\phi(t) = \sqrt{\frac{2\rho_r \Delta_1\phi(t)}{N}}Z,\quad Z \sim {\rm Normal}(0,1)
 			\]
-			This will approximation will give us an order-of-magnitude estimate of $\Delta \phi$ before some time $\Delta^*$ when  $\Delta^* = \phi(t)N$.
+			This will approximation will give us an order-of-magnitude estimate of $\Delta \phi$ before some time $\Delta_1$ when  $\Delta_1 = \phi(t)N/\rho_r$.
 		</p>
 
 		<p class="fragment">
-		 At $\Delta_1$, the mutant fraction will have changed by $\pm \phi(t)$.This means the population has roughly an equal chance of doubling or going extinct over a time period $\Delta_1$. 	</p>
+		 At $\Delta_1$, the mutant fraction will have changed by $\pm \phi(t)$. This means the population has roughly an equal chance of doubling or going extinct over a time period on the order of $\phi(t)N/\rho_r$. 	</p>
 
 
-			<p class ="fragment">
-				After $\delta_1$ we can repeat the approximation and after $k$ iterations a time $t_k$ has elapsed where
-				\[
-				t_k = t_{k-1} + \phi(t_{k-1})N = \sum_j 2^{j} \sim 2^k \implies k = \ln(t)/\ln(2)
-				\]
-			</p>
 
 
 	</section>
@@ -285,18 +284,25 @@
 
 	<!-- ########################################################## -->
 	<section>
-	<h2>  Evolution in the Moran model </h2>
+	<h2>  The Moran model </h2>
 				<h4>So what is the chance the mutant lineage reaches the drift barrier before going extinct?</h4>
 
+<p >
+	Repeat the approximation and after $k$ iterations a time $t_k$ has elapsed where
+	\[
+	t_k = t_{k-1} + \phi(t_{k-1})N/\rho_r = \frac{1}{\rho_r}\sum_j 2^{j} \sim \frac{2^k}{\rho_r} \implies k = \ln(\rho_rt)/\ln(2)
+	\]
+</p>
 	<p class = "fragment">
-Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the mutant size and chance of survival:
+Plugging $k = \ln(t\rho_r)/\ln(2)$ we are obtain order-of-magnitude estimates of the mutant size and chance of survival:
 	\[
 	\phi(t) = \left\{ \begin{array}{cl}
-	 t/N & \text{with prob. $1/t\rho_r$}\\
-		0 & \text{with prob. $1-1/t\rho_r$}\end{array}\right.
+	 t\rho_r/N & \text{with prob. $\frac{1}{t\rho_r}$}\\
+		0 & \text{with prob. $1-\frac{1}{t\rho_r}$}\end{array}\right.
 	\]</p>
 	<p class = "fragment">
-	So the population will reach a fraction $1/Ns = \rho_rt/N$ after a time $\rho_rt = 1/s$. The chance the survive until this time is $p_{\rm fix}\sim s$.
+	So the population will reach a fraction $1/Ns$ after a time $t_{\rm drift} = 1/s\rho_r$.</p>
+	<p class = "fragment"> The chance the survive until this time is $p_{\rm fix}\sim 1/t_{\rm drift}\rho_r = s$.
 </p>
 
 </section>
@@ -304,20 +310,36 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 <!-- ########################################################## -->
 <section>
-<h2> Evolution in the Moran model </h2>
+<h2> The Moran model </h2>
 	<h4>How fast do mutations accumulate?</h4>
 	<p class = "fragment">In general, very complicated problem because we need to consider competition between >2 mutants and the theory above breaks down. </p>
 
 	<h4 class = "fragment"> When can we neglect competition between mutant lineages? </h4>
 
-	<p class = "fragment"> When time for established mutant to sweep through the  population is much less than time for new mutation to become established. Letting $\mu$ be the mutation rate:
-		\[\tau_{\rm sw} = 1/\delta \rho\ln (Ns) \ll \tau_{\rm est} = 1/N\mu \rho_r s \implies N\mu \ln Ns \ll 1 \]</p>
+	<p class = "fragment"> Two important time-scales:</p>
+		<ul>
+			<li class = "fragment"><strong> Establishment time $\tau_{\rm est}$</strong>: The time for a new mutation to occur and become established (reach the drift barrier) in the population. This is on the order of $1/N\mu \rho_r s$.  </li>
+		</br>
+				<li class = "fragment"><strong> Sweep time $\tau_{\rm sw}$</strong>: The time for an established mutation to sweep through the population. Since established mutations grow approximately exponentially starting from the drift barrier, $\tau_{\rm sw}$ is on the order of $1/\delta \rho\ln (Ns)$  </li>
+		</ul>
 
-		<p class = "fragment">In this regime, fixations a Poisson process with rate $1/\tau_{\rm est} = N\mu s$. </p>
-			<p class = "fragment"> Simple case where all mutation increase fitness by $\delta \rho$:
-		\[ \frac{d}{dt}\langle\rho \rangle = \frac{\delta \rho}{\tau_{\rm est}} = N\mu (\delta \rho)^2\implies \langle \rho(t) \rangle \sim N\mu (\delta \rho)^2\] </p>
 
 
+</section>
+
+<!-- ########################################################## -->
+<section>
+<h2> The Moran model </h2>
+	<h4>How fast do mutations accumulate?</h4>
+	<p>In general, very complicated problem because we need to consider competition between >2 mutants and the theory above breaks down. </p>
+
+	<h4> When can we neglect competition between mutant lineages? </h4>
+	<p> Condition for "succesive mutations":
+	\[\tau_{\rm sw} = 1/\delta \rho\ln (Ns) \ll \tau_{\rm est} = 1/N\mu \rho_r s \implies N\mu \ln Ns \ll 1 \]</p>
+
+	<p class = "fragment">In this regime, fixations are Poisson process with rate $1/\tau_{\rm est} = N\mu s$. </p>
+		<p class = "fragment"> Simple case where all mutation increase fitness by $\delta \rho$:
+	\[ \frac{d}{dt}\langle\rho \rangle = \frac{\delta \rho}{\tau_{\rm est}} = N\mu (\delta \rho)^2\implies \langle \rho(t) \rangle \sim N\mu (\delta \rho)^2\] </p>
 </section>
 
 
@@ -334,7 +356,11 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 		<section>
 			<h2> Part 2: From single-cell to population scale </h2>
 
-			<img src="./figures/scales.png">
+			<img src="./figures/scales2.png">
+		</br>
+			<p class = "fragment">Underneath the Moran model was a pretty strong assumption about how noise in the growth and division of single-cell propogates to the population level.   </p>
+
+				<p class = "fragment">We will revist this assumption in the context of the Moran model, but first we need to understand some basic aspects of so-called <strong>are structured populations</strong>.  </p>
 
 
 			</section>
@@ -446,17 +472,19 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 				<!-- ########################################################## -->
 				<section>
 					<h2> The Euler-Lotka Equation </h2>
-					<p class = "fragment"> Example: assume generation time distribution is a Gamma distribution characterized by a mean, $\bar{\tau}$ and coefficient of variation, ${\rm CV}$:
+						<div class = "r-stack">
+					<p class = "fragment current-visible"> Example: assume generation time distribution is a Gamma distribution characterized by a mean, $\bar{\tau}$ and coefficient of variation, ${\rm CV}$:
 					\[
 				f(\tau) = \frac{1}{\Gamma(k)}\tau^{k-1}e^{-\tau/\theta}
 						\]
 						where $\theta = \langle\tau \rangle {\rm CV}^2$ and $k = 1/{\rm CV}^2$.
 					</p>
-					<div class = "r-stack">
-						<img class = "fragment current-visible" src="./figures/gamma_dist.svg" height="200">
-						<p class = "fragment">Plugging into the Euler-Lotka Formula reveals
+						<img class = "fragment" src="./figures/gamma_dist.svg"></div>
+
+<div class = "r-stack">
+						<p class = "fragment current-visible">Plugging into the Euler-Lotka Formula reveals
 						\[\rho = \frac{2^{-{\rm CV}^2}-1}{{\rm CV}^2\tau}\]</p>
-					</div>
+
 
 					<div  class = "fragment">
 					<p>
@@ -465,6 +493,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 							<li> $CV \to 0$, $\rho \to \ln(2)/\langle\tau \rangle$ </li>
 							<li> $CV =1$, $\rho = 1/\langle \tau \rangle$ </li>
 						</ul><p></div>
+						</div>
 				</section>
 
 				<!-- ########################################################## -->
@@ -545,7 +574,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 					All the classical results about fixation and neutral drift then follow.
 				</p>
 
-				<p class ="fragment">This approach assumes that the age distribution can be treated as in steady-state (approach was used in  Shpak1 (2007))</p>
+				<p class ="fragment"> Much of the previous liturature on evolution in age-structured populations focuses on this approximation  (e.g. Shpak (2007))</p>
 
 
 
@@ -586,14 +615,19 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 					<h2>Results: beneficial mutations </h2>
 					<p> Now let's consider the fate of a benificial mutation occuring in one cell. Can we use the argument from before but with the drift barrier at $N_{\rm eff} = 2\rho/3\ln(2)N$?   </p>
 					<div class = "r-stack">
-					<p class = "fragment current-visible"> Let $p_{\rm ext}$ be the exitinctin probability and $q$ be the chance that a cell is expelled before it divides. Then
+					<p class = "fragment current-visible"> Let $p_{\rm ext}$ be the probability that a mutant goes extinct. Then
 					\[
 					p_{\rm ext} = q +(1-q)p_{\rm ext} ^2.
 				\]
 					where
-					\[q = \rho_r\int_0^{\infty}\int_0^{\tau_d}f_m(\tau_d)e^{-\rho_r \tau_e}d\tau_e d\tau_d = 1 - \tilde{f}_m(\rho_r)\]
-					$\tilde{f}_m(\rho_r) = \int_0^{\infty}f_m(\tau)e^{-\rho_r\tau}d\tau$ is the Laplace transform of $f_m$ evaluated at $\rho_r$.
+					\[q = {\mathbb P}[\text{cell is expelled before division}] =  \rho_r\int_0^{\infty}\int_0^{\tau_d}f_m(\tau_d)e^{-\rho_r \tau_e}d\tau_e d\tau_d = 1 - \tilde{f}_m(\rho_r)\]
+					and $\tilde{f}_m(\rho_r) = \int_0^{\infty}f_m(\tau)e^{-\rho_r\tau}d\tau$ is the Laplace transform of $f_m$ evaluated at $\rho_r$.
 				</p>
+				<p class = "fragment current-visible"> If $q>1/2$, we get
+					\[p_{\rm fix} = 1- p_{\rm ext} =1- \frac{q}{1-q} \]
+					 which implies
+					 \[\frac{1}{2-p_{\rm fix}} = \tilde{f}_m(\rho_r)\]
+			</p>
 
 					<img class = "fragment" src="./figures/el_vs_pfix.png" height = 300>
 				</div>
@@ -606,12 +640,15 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 					<section>
 					<h2>Results: benificial mutations </h2>
 					<p> <strong>Example </strong>: Let's assume the distribution of generation times is a gamma distribution. </p>
-					<div class = "r-stack">
-					<p class = "fragment current-visible"> We can show that
+					<div class="container">
+						<div class = "col">
+						</br>
+					<p class = "fragment"> We can show that
 						\[
 				p_{\rm fix} =  \frac{2}{{\rm CV}_{\tau}^2}\left(1-2^{-{\rm CV}_{\tau}^2} \right)s + O(s^2).\]</p>
-
-					<img class = "fragment" src="./figures/pfix_sims.png" height = 300></div>
+			</div>
+<div class = "col">
+					<img class = "fragment" src="./figures/pfix_sims.png" height = 300></div></div>
 					<div class = "fragment">
 					<p>Notice that as ${\rm CV}\to 0$, we obtain $p_{\rm fix} = 2\ln(2)s \ne N/N_{\rm eff}s$. </p>
 
@@ -636,11 +673,9 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 
 			<section>
 				<h2>What's next? </h2>
-				<p>Our illustrates how the way in which we incoperate noise into our evolutionary dynamics models can have subtle effects which ultimately influence qualitative aspects of evolution trajecotries.   </p>
 				<p> Many open questions remain about how these effects manifest in real experiments. </p>
 				<ul>
 					<li> We have swept a key fact under the rug: Moran model is already an idealized description of the continous culture. How does discreteness in diluation events influence our noise model?  </li>
-					<li> It's also interesting to think about continous cultures vs. serial dilution cultures and how non-genetic variability manifests in these different settings. In serial dilution culture, the main source of non-genetic variability is the lag time. </li>
 					<li> It's also interesting to think about continous cultures vs. serial dilution cultures and how non-genetic variability manifests in these different settings. In serial dilution culture, the main source of non-genetic variability is the lag time. </li>
 				</ul>
 			</section>
@@ -649,7 +684,7 @@ Plugging $k = \ln(t)/\ln(2)$ we are obtain order-of-magnitude estimates of the m
 			<section>
 				<h2>Thanks for listening! </h2>
 
-					<img src="./figures/lineages1.svg">
+					<img src="./figures/cover.svg">
 					<h4>Questions? </h4>
 			</section>
 
